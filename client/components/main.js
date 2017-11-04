@@ -1,4 +1,5 @@
 
+
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
@@ -17,7 +18,8 @@ const Main = (props) => {
 
   return (
     <div>
-      <h1>BOILERMAKER</h1>
+      <h1>Jean-Claude-Schwarzenegger-INC</h1>
+      >>>>>>> master
       <nav>
         {
           isLoggedIn
@@ -30,12 +32,14 @@ const Main = (props) => {
               {/* The navbar will show these links before you log in */}
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
+
             </div>
+
         }
       </nav>
       <hr />
       {children}
-      <Test />
+      <Test /> // this is for testing front end without messing with this file
     </div>
   )
 }
@@ -47,6 +51,7 @@ const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id
   }
+
 }
 
 const mapDispatch = (dispatch) => {
