@@ -1,10 +1,9 @@
 import React from 'react'
 import {NavLink, withRouter} from 'react-router-dom'
-
 import { connect } from 'react-redux'
-
 import store from '../store'
 import { incrementInDb, addProductToDb, changeStatusDb } from '../store/order'
+
 
  const Cart = (props) => {
   console.log(props, "in cart")
@@ -14,9 +13,9 @@ import { incrementInDb, addProductToDb, changeStatusDb } from '../store/order'
       <hr />
       <h1>Cart Empty!!!!!!!</h1>
 
-      <NavLink to="/products">
-         <button onClick={() => alert('Order Successfully Submitted')}>Checkout As Guest</button>
-      </NavLink>
+      {/*<NavLink to="/products">*/}
+         {/*<button onClick={() => alert('Order Successfully Submitted')}>Checkout As Guest</button>*/}
+      {/*</NavLink>*/}
 
       <NavLink to="/login">
         <button>Checkout As User</button>
