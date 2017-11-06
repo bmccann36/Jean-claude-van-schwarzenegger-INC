@@ -10,10 +10,10 @@ async function seed() {
   magenta('begin sync')
 
   const users = await Promise.all([
-    User.create({ firstName: 'Amadou', lastName: 'Jallow', address: '5 Hanover Square', email: 'hi@gmail.com', password: 'fsgsgerg', status: 'admin' }),
-    User.create({ firstName: 'Nadim', lastName: 'Udin', address: '5 Hanover Square', email: 'ramen@gmail.com', password: 'fsgsgerg', status: 'admin' }),
-    User.create({ firstName: 'Brian', lastName: 'McCann', address: '5 Hanover Square', email: 'soba@gmail.com', password: 'fsgsgerg', status: 'admin' }),
-    User.create({ firstName: 'Nick', lastName: 'Plucker', address: '5 Hanover Square', email: 'udon@gmail.com', password: 'fsgsgerg', status: 'admin' })
+    User.create({ firstName: 'Amadou', lastName: 'Jallow', address: '5 Hanover Square', email: 'hi@gmail.com', password: 'password', status: 'admin' }),
+    User.create({ firstName: 'Nadim', lastName: 'Uddin', address: '5 Hanover Square', email: 'ramen@gmail.com', password: 'password', status: 'admin' }),
+    User.create({ firstName: 'Brian', lastName: 'McCann', address: '5 Hanover Square', email: 'soba@gmail.com', password: 'password', status: 'admin' }),
+    User.create({ firstName: 'Nick', lastName: 'Plucker', address: '5 Hanover Square', email: 'udon@gmail.com', password: 'password', status: 'admin' })
 
   ])
 

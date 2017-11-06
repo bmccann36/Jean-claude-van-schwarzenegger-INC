@@ -1,10 +1,12 @@
 import React from 'react'
-import {NavLink} from 'react-router-dom'
+import {NavLink, withRouter} from 'react-router-dom'
+import { connect } from 'react-redux'
+import store from '../store'
+import { incrementInDb, addProductToDb, changeStatusDb } from '../store/order'
 
-export const Cart = (props) => {
 
-      console.log('props, ',  props)
-
+ const Cart = (props) => {
+  console.log(props, "in cart")
   return (
     <div>
       <h1>Inside Your Shopping Cart</h1>
@@ -24,5 +26,16 @@ export const Cart = (props) => {
   )
 }
 
-export default Cart;
+const mapStateToProps = (state) => {
+  return {
+    product: state.products,
+    order: state.order
+  }
+}
+
+const mapDispatchToProps = { incrementInDb, addProductToDb }
+
+// call connect function from react-redux, pass it mapState, and invoke with the presentational component (this component itself)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart))
+// don't need map dispatch yet because no methods being called
 
