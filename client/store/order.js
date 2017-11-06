@@ -61,6 +61,7 @@ export function fetchOrder(orderId) {
     return axios.get(`api/orders/${orderId}`)
       .then(res => res.data)
       .then(order => {
+        console.log(order, 'fetch order')
         dispatch(getOrder(order))
       })
   }

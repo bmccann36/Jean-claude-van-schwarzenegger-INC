@@ -12,7 +12,7 @@ class TestCart extends Component {
     // console.log(this.props, 'testCart props')
   }
 
-  handleNewItem(ev){
+  handleNewItem(ev) {
     ev.preventDefault()
     const userId = ev.target.userId.value
     const productId = ev.target.productId.value
@@ -22,9 +22,10 @@ class TestCart extends Component {
 
   handleIncrement(ev) {
     ev.preventDefault()// for now getting the orderId off of the state at 'order' in the future probably better to get it from the userId which we will be storing in state -brian
-    // const orderId = (this.props.order[0].id)
+    // console.log(this.props.order[0].id)
+    const orderId = ev.target.orderId.value
     const productId = ev.target.productId.value
-    const incrementThunk = incrementInDb(1, productId) // hard coding orderId for now
+    const incrementThunk = incrementInDb(orderId, productId)
     store.dispatch(incrementThunk)
 
   }
@@ -39,8 +40,8 @@ class TestCart extends Component {
 
   render() {
     let products
- if (this.props.order.length) products = this.props.order[0].products // this is how you see products
-//  console.log(products)
+    if (this.props.order.length) products = this.props.order[0].products // this is how you see products
+
     return (
       <div>
         <div>
@@ -49,17 +50,22 @@ class TestCart extends Component {
         </div>
 
         <div>
-        <form onSubmit={this.handleNewItem}>
-          <hi>new item</hi>
-          <input placeholder="userId" type="number" defaultValue="1" name="userId" />
-          <input placeholder="productId" type="number"  name="productId" />
-          <button type="submit"> add item </button>
-        </form>
+          <h1> add order item below </h1>
+          <form onSubmit={this.handleNewItem}>
+            <p> user id </p>
+            <input placeholder="userId" type="number" defaultValue="1" name="userId" />
+            <p> product id </p>
+            <input placeholder="productId" type="number" name="productId" />
+            <button type="submit"> add item </button>
+          </form>
 
         </div>
+        <h1> increment item quantity below </h1>
 
         <form onSubmit={this.handleIncrement}>
-          <hi>add another</hi>
+          <p> order id </p>
+          <input placeholder="orderId" type="number" defaultValue="1" name="orderId" />
+          <p> product id </p>
           <input placeholder="productId" type="number" defaultValue="1" name="productId" />
           <button type="submit"> add another </button>
         </form>

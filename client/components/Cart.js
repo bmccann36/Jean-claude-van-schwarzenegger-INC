@@ -29,7 +29,7 @@ import { incrementInDb, addProductToDb, changeStatusDb } from '../store/order'
 
 const mapStateToProps = (state) => {
   return {
-    product: state.product,
+    product: state.products,
     order: state.order
   }
 }
