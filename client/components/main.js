@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
+import { NavBar } from '../components';
 
-import Test from './test'
+//import Test from './test'
 /**
  * COMPONENT
  *  The Main component is our 'picture frame' - it displays the navbar and anything
@@ -16,27 +17,9 @@ const Main = (props) => {
 // console.log(props, 'in main')
   return (
     <div>
-      <h1>Jean-Claude-Schwarzenegger-INC</h1>
-      <nav>
-        {
-          isLoggedIn
-            ? <div>
-              {/* The navbar will show these links after you log in */}
-              <Link to="/home">Home</Link>
-              <a href="#" onClick={handleClick}>Logout</a>
-            </div>
-            : <div>
-              {/* The navbar will show these links before you log in */}
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
-
-            </div>
-
-        }
-      </nav>
-      <hr />
+      <NavBar isLoggedIn={isLoggedIn}/>
       {children}
-        <Test />
+        {/*<Test />*/}
     </div>
   )
 }
