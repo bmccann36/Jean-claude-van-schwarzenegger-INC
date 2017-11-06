@@ -8,7 +8,7 @@ export {default as UserHome} from './user-home'
 export {Login, Signup} from './auth-form'
 
 export { default as AllProduct } from './AllProduct';
-export { SingleProduct } from './SingleProduct'
+export { default as SingleProduct } from './SingleProduct'
 export { Cart } from './Cart'
 export { Review } from './Review'
 export { default as NavBar } from './NavBar';

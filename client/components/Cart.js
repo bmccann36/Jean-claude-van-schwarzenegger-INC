@@ -1,17 +1,26 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 
 export const Cart = () => {
 
   return (
     <div>
-      <Link to="/all-products">All Products</Link>
       <h1>Inside Your Shopping Cart</h1>
       <hr />
       <h1>Cart Empty!!!!!!!</h1>
+
+      <NavLink to="/products">
+         <button onClick={() => alert('Order Successfully Submitted')}>Checkout As Guest</button>
+      </NavLink>
+
+      <NavLink to="/login">
+        <button>Checkout As User</button>
+      </NavLink>
+
+
     </div>
   )
 }
 
-//export default Review;
+export default Cart;
 
