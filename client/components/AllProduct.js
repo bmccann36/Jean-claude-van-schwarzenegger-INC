@@ -5,7 +5,7 @@ import { withRouter, NavLink } from 'react-router-dom';
 function AllProduct(props) {
 
   const { products } = props
-      console.log('Products,' , products)
+      //console.log('Products,' , products)
 
   return (
     <ul>

@@ -1,7 +1,9 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
 
-export const Cart = () => {
+export const Cart = (props) => {
+
+      console.log('props, ',  props)
 
   return (
     <div>
@@ -9,9 +11,9 @@ export const Cart = () => {
       <hr />
       <h1>Cart Empty!!!!!!!</h1>
 
-      <NavLink to="/products">
-         <button onClick={() => alert('Order Successfully Submitted')}>Checkout As Guest</button>
-      </NavLink>
+      {/*<NavLink to="/products">*/}
+         {/*<button onClick={() => alert('Order Successfully Submitted')}>Checkout As Guest</button>*/}
+      {/*</NavLink>*/}
 
       <NavLink to="/login">
         <button>Checkout As User</button>

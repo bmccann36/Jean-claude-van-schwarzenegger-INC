@@ -2,35 +2,86 @@ import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom'
 import { connect } from 'react-redux'
 
-function SingleProduct(props) {
+import { incrementInDb, addProductToDb, changeStatusDb } from '../store/order'
 
-  const { products } = props;
-    // console.log('props', props);
-   const productId = Number(props.match.params.productId);
-    const singleProduct = products.filter(product => product.id === productId);
-       //console.log('Single Product', singleProduct[0].name)
-    return (
-        <div>
-          {/*<h1>{singleProduct[0].name}</h1>*/}
-          <img src={singleProduct.photos} alt="Image Unavailable"/>
-          <p>Description Goes Here!</p>
-          <h1>Category goes here:</h1>
-          <h1>Stocks goes here:</h1>
-          <h1>Price:</h1>
+import store from '../store'
 
-          <NavLink to="/cart">
-             <button >Add To Cart</button>
-          </NavLink>
+class SingleProduct extends Component {
 
-        </div>
-      )
- // }
+   constructor(props){
+     super(props);
+
+     this.handleNewItem = this.handleNewItem.bind(this);
+   }
+
+  handleNewItem(ev, productId) {
+    ev.preventDefault()
+    //const userId = ev.target.userId.value
+    //const productId = ev.target.productId.value
+    const newItemThunk = addProductToDb(1, productId)
+    store.dispatch(newItemThunk)
+  }
+  //
+  // handleIncrement(ev) {
+  //   ev.preventDefault()// for now getting the orderId off of the state at 'order' in the future probably better to get it from the userId which we will be storing in state -brian
+  //   // console.log(this.props.order[0].id)
+  //   const orderId = ev.target.orderId.value
+  //   const productId = ev.target.productId.value
+  //   const incrementThunk = incrementInDb(orderId, productId)
+  //   store.dispatch(incrementThunk)
+  //
+  // }
+  //
+  // handleSubmit(ev) {
+  //   ev.preventDefault()
+  //   console.log('you submitted')
+  //   const statusThunk = changeStatusDb(1, { status: 'ordered' })
+  //   store.dispatch(statusThunk)
+  // }
+
+
+
+    render(){
+
+      const { products } = this.props;
+      const productId = Number(this.props.match.params.productId);
+
+      const singleProduct = products.filter(product => product.id === productId);
+
+      console.log('productId ', productId)
+
+          return (
+            <div>
+              {
+                !singleProduct.length ?
+                  <h1>`No Product`</h1>
+                  :
+                  <div>
+                    <h1>{singleProduct[0].name}</h1>
+                    <img src={singleProduct[0].photos} alt="Image Unavailable"/>
+                    <p>Description Goes Here!</p>
+                    <h1>Category goes here:</h1>
+                    <h1>Stocks goes here:</h1>
+                    <h1>Price:</h1>
+                  </div>
+              }
+              <NavLink to="/cart" >
+                <button type="submit" onClick={this.handleNewItem}>Add To Cart</button>
+              </NavLink>
+            </div>
+          )
+     }
 }
 
 const mapStateToProps = function (state) {
   return {
-    products: state.products  //product Or products  ????
+    products: state.products,  //product Or products  ????
+    order: state.order,
   }
 }
-export default connect(mapStateToProps)(SingleProduct);
+
+const mapDispatchToProps = { addProductToDb }
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct);
 
