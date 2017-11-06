@@ -20,17 +20,22 @@ const increment = (orderItem) => ({ type: INCREMENT, orderItem: orderItem })
 //THUNK CREATORS
 
 export function changeStatusDb(userId, status) {
-
-    // export function thunk(dispatch) {
-
-    // }
-
+  console.log('status fire')
+  return function thunk(dispatch) {
+    return axios.put(`api/orders/status/${userId}`, status)
+      .then(res => res.data)
+      .then(ordered => { // refers to order with status 'ordered' -brian
+        dispatch(modStatus(ordered))
+      })
   }
+
+}
 
 
 export function incrementInDb(orderId, productId) {
-  // console.log(`api/orders/${orderId}/update/${productId}`)
+
   return function thunk(dispatch) {
+    console.log('running')
     return axios.put(`api/orders/${orderId}/update/${productId}`)
       .then(res => res.data)
       .then(orderItem => {
@@ -81,9 +86,6 @@ export default function (order = [], action) {
     case GET_ORDER:
       return action.order
 
-    case MOD_STATUS:
-      return action.order
-
     case ADD_PRODUCT:
       return [...order, action.order]
 
@@ -92,6 +94,9 @@ export default function (order = [], action) {
         return (item.id === action.orderItem.productId) ?
           action.orderItem : item
       })
+
+    case MOD_STATUS: // empties cart (sets back to empty array)
+      return []
 
     default:
       return order

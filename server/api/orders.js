@@ -30,9 +30,8 @@ router.put('/status/:userId', (req, res, next) => {
 		where: { userId: req.params.userId, status: 'pending' }
 	})
 		.then(order => {
-			console.log(order)
 			return order.update({
-				status: 'ordered'
+				status: req.body.status
 			})
 		})
 		.then(res.send.bind(res))
