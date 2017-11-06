@@ -4,11 +4,11 @@ import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, Review, Cart, SingleProduct} from './components'
+import {Main, Login, Signup, UserHome, Review, Cart, SingleProduct, AllProduct} from './components'
 
-import store, {me} from './store'
+import store from './store'
 import { fetchOrder } from './store/order'
-import { fetchProducts } from './store/product'
+import { me, fetchProducts } from './store'
 
 
 /**
@@ -26,7 +26,7 @@ class Routes extends Component {
 
 
   render () {
-    const {isLoggedIn} = this.props
+    const { isLoggedIn } = this.props
     // console.log(this.props, 'in routes')
 
     return (
@@ -34,11 +34,14 @@ class Routes extends Component {
         <Main>
           <Switch>
             {/* Routes placed here are available to all visitors */}
+            <Route exact path="/" component={UserHome} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route path="/review" component={Review} />
-            <Route path="/single-product" component={SingleProduct} />
+            <Route exact path="/products" component={AllProduct} />
+            <Route path="/products/:productId" component={SingleProduct} />
             <Route path="/cart" component={Cart} />
+            {/*<Route path="/order-details" component={OrderDetails} />*/}
+            <Route path="/reviews" component={Review} />
 
             {
               isLoggedIn &&
@@ -72,7 +75,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
-      dispatch(me())
+      dispatch(me());
+      dispatch(fetchProducts());
     }
   }
 }

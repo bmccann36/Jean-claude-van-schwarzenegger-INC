@@ -4,9 +4,7 @@ import axios from 'axios'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 
 // ACTION CREATORS
-const loadProducts = (products) => ({ type: GET_PRODUCTS, products: products })
-// const getProduct = product => ({type: GET_PRODUCT, product})
-
+const loadProducts = (products) => ({ type: GET_PRODUCTS, products })
 
 //THUNK CREATORS
 
