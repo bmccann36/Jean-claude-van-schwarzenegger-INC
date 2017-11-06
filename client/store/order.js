@@ -19,6 +19,15 @@ const increment = (orderItem) => ({ type: INCREMENT, orderItem: orderItem })
 
 //THUNK CREATORS
 
+export function changeStatusDb(userId, status) {
+
+    // export function thunk(dispatch) {
+
+    // }
+
+  }
+
+
 export function incrementInDb(orderId, productId) {
   // console.log(`api/orders/${orderId}/update/${productId}`)
   return function thunk(dispatch) {

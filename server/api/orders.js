@@ -5,23 +5,38 @@ const { Order, Product, OrderProduct } = require('../db/models')
 // new route with OrderProduct - need something like this for delete
 router.put('/:orderId/update/:productId', (req, res, next) => {
 
-OrderProduct.findOne({
+	OrderProduct.findOne({
 		where: {
 			productId: req.params.productId,
 			orderId: req.params.orderId
 		}
 	})
-//UPDATES QUANTITY BY 1 OR SETS IT TO 1
-.then((orderItem) => {
-	return orderItem.update({
-		quantity: orderItem.quantity + 1
-	})
-})
-//IF YOU REACHED THIS EVERYTHING WENT RIGHT
-.then((OrderItem) => res.send(OrderItem))
-.catch(next)
+		//UPDATES QUANTITY BY 1 OR SETS IT TO 1
+		.then((orderItem) => {
+			return orderItem.update({
+				quantity: orderItem.quantity + 1
+			})
+		})
+		//IF YOU REACHED THIS EVERYTHING WENT RIGHT
+		.then((OrderItem) => res.send(OrderItem))
+		.catch(next)
 })
 
+
+// changes status from pending to ordered -brian
+router.put('/status/:userId', (req, res, next) => {
+	// console.log(req.body)
+	Order.findOne({
+		where: { userId: req.params.userId, status: 'pending' }
+	})
+		.then(order => {
+			console.log(order)
+			return order.update({
+				status: 'ordered'
+			})
+		})
+		.then(res.send.bind(res))
+})
 
 // DID NOT EDIT BELOW HERE -Brian
 router.get('/:userId', (req, res, next) => {
