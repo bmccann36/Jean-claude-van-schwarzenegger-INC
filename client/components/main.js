@@ -5,7 +5,7 @@ import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
 import { NavBar } from '../components';
 
-//import Test from './test'
+import Test from './test'
 /**
  * COMPONENT
  *  The Main component is our 'picture frame' - it displays the navbar and anything
@@ -19,7 +19,7 @@ const Main = (props) => {
     <div>
       <NavBar isLoggedIn={isLoggedIn}/>
       {children}
-        {/*<Test />*/}
+        <Test />
     </div>
   )
 }
