@@ -14,12 +14,23 @@ const DECREMENT = 'DECREMENT' // possibly same as increment
 const getOrder = (order) => ({ type: GET_ORDER, order: order })
 const modStatus = (updatedOrder) => ({ type: MOD_STATUS, order: updatedOrder })
 const addProduct = (order) => ({ type: ADD_PRODUCT, order: order })
-const removeProduct = (order) => ({type: REMOVE_PRODUCT, order: order})
-const increment = (order) => ({type: INCREMENT, order: order })
+const removeProduct = (order) => ({ type: REMOVE_PRODUCT, order: order })
+const increment = (orderItem) => ({ type: INCREMENT, orderItem: orderItem })
 
 //THUNK CREATORS
 
+export function incrementInDb(orderId, productId) {
+  // console.log(`api/orders/${orderId}/update/${productId}`)
+  return function thunk(dispatch) {
+    return axios.put(`api/orders/${orderId}/update/${productId}`)
+      .then(res => res.data)
+      .then(orderItem => {
+        dispatch(increment(orderItem))
+      })
+  }
+}
 
+// this is really add ORDER to db since it creates new
 export function addProductToDb(userId, productId) {
   return function thunk(dispatch) {
     return axios.put(`/api/orders/${userId}/add/${productId}`)
@@ -65,7 +76,13 @@ export default function (order = [], action) {
       return action.order
 
     case ADD_PRODUCT:
-        return [...order, action.order]
+      return [...order, action.order]
+
+    case INCREMENT: // replace the orderItem in order array with new one with incremented quantity
+    return order.map( item => {
+        return (item.id === action.orderItem.productId) ?
+        action.orderItem : item
+      })
 
     default:
       return order

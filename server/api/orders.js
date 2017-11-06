@@ -18,7 +18,7 @@ OrderProduct.findOne({
 	})
 })
 //IF YOU REACHED THIS EVERYTHING WENT RIGHT
-.then((updatedOrder) => res.send(updatedOrder))
+.then((OrderItem) => res.send(OrderItem))
 .catch(next)
 })
 
