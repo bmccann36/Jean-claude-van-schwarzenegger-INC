@@ -4,7 +4,9 @@ import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, Review, Cart, SingleProduct, AllProduct} from './components'
+import {Main, Login, Signup, UserHome, Review, SingleProduct, AllProduct} from './components'
+import Cart from './components/Cart'
+
 
 import store from './store'
 import { fetchOrder } from './store/order'
@@ -18,8 +20,8 @@ class Routes extends Component {
   componentDidMount () {
     const productsThunk = fetchProducts()
     store.dispatch(productsThunk)
-    const orderThunk = fetchOrder(1) // hard coding an orderID
-    store.dispatch(orderThunk)
+    // const orderThunk = fetchOrder(1) // hard coding an orderID
+    // store.dispatch(orderThunk)
     this.props.loadInitialData()
   }
 
