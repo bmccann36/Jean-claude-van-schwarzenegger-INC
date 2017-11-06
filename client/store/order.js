@@ -5,16 +5,33 @@ const chalk = require('chalk')
 const GET_ORDER = 'GET_ORDER'
 const MOD_STATUS = 'MOD_STATUS'
 const ADD_PRODUCT = 'ADD_PRODUCT'
+// const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
+const INCREMENT = 'INCREMENT'
+// const DECREMENT = 'DECREMENT' // possibly same as increment
+
 
 //ACTION CREATORS
 const getOrder = (order) => ({ type: GET_ORDER, order: order })
-const modStatus = (updatedOrder) => ({ type: MOD_STATUS, order: updatedOrder })
+const modStatus = (updatedOrder) => ({ type: MOD_STATUS, order: updatedOrder }) // not implemented yet
 const addProduct = (order) => ({ type: ADD_PRODUCT, order: order })
+// const removeProduct = (order) => ({ type: REMOVE_PRODUCT, order: order })
+const increment = (orderItem) => ({ type: INCREMENT, orderItem: orderItem })
 
 //THUNK CREATORS
-export function addProductToDb(userId, productId) {
-  //console.log('order', `/api/orders/${userId}/add/${productId}`)
 
+export function incrementInDb(orderId, productId) {
+  // console.log(`api/orders/${orderId}/update/${productId}`)
+  return function thunk(dispatch) {
+    return axios.put(`api/orders/${orderId}/update/${productId}`)
+      .then(res => res.data)
+      .then(orderItem => {
+        dispatch(increment(orderItem))
+      })
+  }
+}
+
+// this is really add ORDER to db since it creates new
+export function addProductToDb(userId, productId) {
   return function thunk(dispatch) {
     return axios.put(`/api/orders/${userId}/add/${productId}`)
       .then(res => res.data)
@@ -58,23 +75,14 @@ export default function (order = [], action) {
     case MOD_STATUS:
       return action.order
 
-    case ADD_PRODUCT:  // map over and replace if matching productID
-      let replaced = false
-      let newState = order.map(item => {
-        if (item.productId == action.order.productId) {
-          replaced = true
-          console.log('replaced', replaced)
-          return action.order
-        }
-        else {return item}
-      })
-      // actual return
-      if (!replaced) { // if no replace add new product to order
-        console.log('not replaced')
-        return [...order, action.order]
-      }
+    case ADD_PRODUCT:
+      return [...order, action.order]
 
-      else {return newState}
+    case INCREMENT: // replace the orderItem in order array with new one with incremented quantity
+      return order.map(item => {
+        return (item.id === action.orderItem.productId) ?
+          action.orderItem : item
+      })
 
     default:
       return order
@@ -85,3 +93,4 @@ export default function (order = [], action) {
 function magenta(str) {
   console.log(chalk.magenta(str))
 }
+
