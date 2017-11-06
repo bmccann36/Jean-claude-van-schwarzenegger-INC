@@ -5,16 +5,16 @@ const chalk = require('chalk')
 const GET_ORDER = 'GET_ORDER'
 const MOD_STATUS = 'MOD_STATUS'
 const ADD_PRODUCT = 'ADD_PRODUCT'
-const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
+// const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 const INCREMENT = 'INCREMENT'
-const DECREMENT = 'DECREMENT' // possibly same as increment
+// const DECREMENT = 'DECREMENT' // possibly same as increment
 
 
 //ACTION CREATORS
 const getOrder = (order) => ({ type: GET_ORDER, order: order })
-const modStatus = (updatedOrder) => ({ type: MOD_STATUS, order: updatedOrder })
+const modStatus = (updatedOrder) => ({ type: MOD_STATUS, order: updatedOrder }) // not implemented yet
 const addProduct = (order) => ({ type: ADD_PRODUCT, order: order })
-const removeProduct = (order) => ({ type: REMOVE_PRODUCT, order: order })
+// const removeProduct = (order) => ({ type: REMOVE_PRODUCT, order: order })
 const increment = (orderItem) => ({ type: INCREMENT, orderItem: orderItem })
 
 //THUNK CREATORS
@@ -79,9 +79,9 @@ export default function (order = [], action) {
       return [...order, action.order]
 
     case INCREMENT: // replace the orderItem in order array with new one with incremented quantity
-    return order.map( item => {
+      return order.map(item => {
         return (item.id === action.orderItem.productId) ?
-        action.orderItem : item
+          action.orderItem : item
       })
 
     default:
@@ -94,10 +94,3 @@ function magenta(str) {
   console.log(chalk.magenta(str))
 }
 
-// order.map(item => {
-//   if (item.productId == action.order.productId) {
-//     replaced = true
-//     console.log('replaced', replaced)
-//     return action.order
-//   }
-//   else {return item}

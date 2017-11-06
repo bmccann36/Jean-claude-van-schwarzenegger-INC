@@ -22,7 +22,6 @@ class TestCart extends Component {
 
   }
 
-
   render() {
 
     return (
@@ -37,7 +36,7 @@ class TestCart extends Component {
         <form onSubmit={this.handleIncrement}>
           <hi>add another</hi>
           <input placeholder="productId" type="number" defaultValue="1" name="productId" />
-          <button type="submit"> add to cart </button>
+          <button type="submit"> add another </button>
         </form>
       </div>
     )
