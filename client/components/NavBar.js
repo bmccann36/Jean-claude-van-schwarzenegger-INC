@@ -23,20 +23,21 @@ function NavBar(props) {
               <div className="nab-bar">
                 {/* The navbar will show these links before you log in */}
                 <NavLink to="/products"><span>Products</span></NavLink>
-                <NavLink to="/cart"><span>Cart</span></NavLink>
                 <NavLink to="/checkout"><span>Checkout</span></NavLink>
 
                 {/* The navbar will show these links after you log in */}
                 {/*<div className="product"><NavLink to="/products">PRODUCTS</NavLink></div>*/}
                 {/*<NavLink to="/home">Home</NavLink>*/}
                 <a href="#" onClick={handleClick}><span>Logout</span></a>
+                <NavLink to="/cart"><img className="cart" src={`http://www.clker.com/cliparts/X/U/F/3/N/2/shopping-cart-logo.svg.hi.png`}/></NavLink>
+
               </div>
                       :
               <div className="nab-bar">
                 {/* The navbar will show these links before you log in */}
                 <NavLink to="/products"><span>Products</span></NavLink>
                 <NavLink to="/login"><span>Login</span></NavLink>
-                <NavLink to="/signup"><span>Sign Up</span></NavLink>
+                <NavLink to="/signup"><span>Signup</span></NavLink>
                 {/*<NavLink to="/cart">*/}
                   {/*<span>Cart</span>*/}
                 {/*</NavLink>*/}
