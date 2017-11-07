@@ -22,17 +22,6 @@ router.get('/user/:userId', (req, res, next) => {
 		.catch(next)
 })
 
-<<<<<<< HEAD
-router.get('/detail/:userId', (req, res, next) => {
-  Order.findAll({
-    where: {
-      userId: req.params.userId,
-      status: 'pending'
-},
-  include: [{ model: Product }]
-})
-.then(order => res.json(order))
-=======
 // ORDER DETAILS
 router.get('/detail/:userId', (req, res, next) => {
 	Order.findAll({
@@ -43,7 +32,6 @@ router.get('/detail/:userId', (req, res, next) => {
 		include: [{ model: Product }]
 	})
 		.then(order => res.json(order))
->>>>>>> master
 })
 
 
