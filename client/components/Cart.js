@@ -22,9 +22,9 @@ import { incrementInDb, addProductToDb, changeStatusDb } from '../store/order'
     <div>
        <ul>
       {
-        orders.length && orders.map(order, i => {
+        orders.length && orders.map(order => {
 
-        let name = (products.filter(product => ( product.id === order.orderId)))[i].name
+        let name = (products.filter(product => ( product.id === order.orderId)))[0].name
            console.log('name', name)
           return (
             <h1 key={order.productId}>{order.quantity}</h1>
