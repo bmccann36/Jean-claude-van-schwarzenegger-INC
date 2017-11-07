@@ -10,7 +10,7 @@ class TestCart extends Component {
   constructor(props) {
     super(props)
     this.handleQuant = this.handleQuant.bind(this) // we need this to have access to this components state in the handle submit method, we get orderId from state.order
-    console.log(this.props, 'testCart props')
+    // console.log(this.props, 'testCart props')
   }
 
   handleNewItem(ev) {
@@ -22,11 +22,11 @@ class TestCart extends Component {
   }
 
   handleQuant(ev) {
-    ev.preventDefault()// for now getting the orderId off of the state at 'order' in the future probably better to get it from the userId which we will be storing in state -brian
-    // console.log(this.props.order[0].id)
+    ev.preventDefault()
     const orderId = ev.target.orderId.value
     const productId = ev.target.productId.value
-    const quant = ev.targe.quant.value
+    const quant = {quantity: ev.target.quant.value}
+    // console.log(orderId, productId, quant)
     const quantThunk = changeQuantInDb(orderId, productId, quant)
     store.dispatch(quantThunk)
 
@@ -71,11 +71,11 @@ class TestCart extends Component {
           </form>
 
           <h3> changeQuantity </h3>
-        <form onSubmit={this.handleIncrement}>
+        <form onSubmit={this.handleQuant}>
           <p> order id </p>
-          <input placeholder="orderId" type="number" defaultValue="1" name="orderId" />
+          <input placeholder="orderId" type="number" defaultValue="6" name="orderId" />
           <p> product id </p>
-          <input placeholder="productId" type="number" defaultValue="1" name="productId" />
+          <input placeholder="productId" type="number" defaultValue="2" name="productId" />
           <input  type="number" placeholder= "quantity" name="quant" />
           <button type="submit"> change </button>
         </form>

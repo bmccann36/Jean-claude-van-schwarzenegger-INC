@@ -33,9 +33,8 @@ export function changeStatusDb(userId, status) {
 
 
 export function changeQuantInDb(orderId, productId, quant) {
-  console.log(orderId, productId, quant, "info here!!")
   return function thunk(dispatch) {
-    console.log('running')
+    // console.log(`api/orders/${orderId}/update/${productId}`)
     return axios.put(`api/orders/${orderId}/update/${productId}`, quant)
       .then(res => res.data)
       .then(orderItem => {
