@@ -1,4 +1,6 @@
 const router = require('express').Router()
+const chalk = require('chalk')
+
 const { Order, Product, OrderProduct } = require('../db/models')
 
 // GET ORDER ITEMS -- thunk = fetchOrder
@@ -20,36 +22,35 @@ router.get('/user/:userId', (req, res, next) => {
 		.catch(next)
 })
 
+
+// ORDER DETAILS
 router.get('/detail/:userId', (req, res, next) => {
-  Order.findAll({
-    where: {
-      userId: req.params.userId,
-      status: 'pending'
-},
-  include: [{ model: Product }]
-})
-.then(order => res.json(order))
+	Order.findAll({
+		where: {
+			userId: req.params.userId,
+			status: 'pending'
+		},
+		include: [{ model: Product }]
+	})
+		.then(order => res.json(order))
 })
 
 
-// where: {
-// 	userId: req.params.userId
-// },
-// include: [{ model: Product }]
 
 // INCREMENT -- thunk = incrementInDb
 router.put('/:orderId/update/:productId', (req, res, next) => {
-
+	magenta('req here')
+		console.log(req.body)
 	OrderProduct.findOne({
 		where: {
 			productId: req.params.productId,
 			orderId: req.params.orderId
 		}
 	})
-		//UPDATES QUANTITY BY 1 OR SETS IT TO 1
+		//UPDATES QUANTITY
 		.then((orderItem) => {
 			return orderItem.update({
-				quantity: orderItem.quantity + 1
+				quantity: +req.body.quantity
 			})
 		})
 		//IF YOU REACHED THIS EVERYTHING WENT RIGHT
@@ -179,3 +180,6 @@ router.delete('/:orderId', (req, res, next) => {
 
 module.exports = router;
 
+function magenta(str) {
+  console.log(chalk.magenta(str))
+}
