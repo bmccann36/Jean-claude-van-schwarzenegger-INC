@@ -1,57 +1,72 @@
-import React from 'react'
-import {NavLink, withRouter} from 'react-router-dom'
-import { connect } from 'react-redux'
+import React, { Component } from 'react'
+import { NavLink, withRouter } from 'react-router-dom'
 import store from '../store'
-import { incrementInDb, addProductToDb, changeStatusDb } from '../store/order'
+import { connect } from 'react-redux'
 
-
- const Cart = (props) => {
-
-
-   let orders = props.order;
-   let products = props.product;
-   //let name;
-   //console.log(" order in cart.js ", props);
-   //console.log(" order ", orders);
-  // console.log(" product ", products);
+import { incrementInDb, addProductToDb } from '../store/order'
 
 
 
-   return (
+class Cart extends Component {
+  constructor(props) {
+    super(props)
 
-    <div>
-       <ul>
-      {
-        orders.length && orders.map(order, i => {
+  }
 
-        let name = (products.filter(product => ( product.id === order.orderId)))[i].name
-           console.log('name', name)
-          return (
-            <h1 key={order.productId}>{order.quantity}</h1>
-          )
-        })
-        }
-     </ul>
 
-      <NavLink to="/checkout">
+  render() {
+    let products
+    let orderItems
+    if (this.props) {
+      products = this.props.product
+      orderItems = this.props.order
+    }
+  orderItems.forEach( orderItem => {
+    const getDetail = findProduct(products, orderItem.productId)
+    orderItem.details = getDetail[0]
+  })
+  console.log(orderItems, 'orderItems')
+
+    return (
+
+      <div>
+        {/* <ul> */}
+        {/*{*/}
+        {/*orders.length && orders.map(order=> {*/}
+        {/*return (*/}
+        {/*<h1 key={order.productId}>{order.quantity}</h1>*/}
+        {/*)*/}
+        {/*})*/}
+        {/*}*/}
+        {/*</ul>*/}
+
+        {/* <NavLink to="/checkout">
         <button className="sub-btn"><small>Checkout</small></button>
-      </NavLink>
+      </NavLink> */}
+        <h1> HELLO </h1>
+
+      </div>
+    )
+  }
 
 
-    </div>
-  )
 }
 
 const mapStateToProps = (state) => {
   return {
     product: state.products,
-    order: state.order
+    order: state.order,
+    user: state.user
   }
 }
 
 const mapDispatchToProps = { incrementInDb, addProductToDb }
 
-// call connect function from react-redux, pass it mapState, and invoke with the presentational component (this component itself)
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart))
-// don't need map dispatch yet because no methods being called
 
+
+
+
+function findProduct(products, productId) {
+  return products.filter(product => productId === product.id)
+}
