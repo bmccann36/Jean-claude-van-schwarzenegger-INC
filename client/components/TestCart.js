@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
 import store from '../store'
-import { incrementInDb, addProductToDb, changeStatusDb } from '../store/order'
+import { incrementInDb, addProductToDb, changeStatusDb, destroyOrderInDb } from '../store/order'
 
 
 class TestCart extends Component {
@@ -37,6 +37,12 @@ class TestCart extends Component {
     store.dispatch(statusThunk)
   }
 
+  handleClear(ev) {
+    ev.preventDefault()
+    const clearThunk = destroyOrderInDb(ev.target.orderId.value)
+    store.dispatch(clearThunk)
+  }
+
 
   render() {
     let products
@@ -45,12 +51,21 @@ class TestCart extends Component {
     return (
       <div>
         <div>
-          <h1>submit order</h1>
+          <h3>submit order</h3>
           <button type="submit" onClick={this.handleSubmit}> submit </button>
         </div>
 
         <div>
-          <h1> add order item below </h1>
+          <h3>clear cart</h3>
+          <form onSubmit={this.handleClear}>
+            <input placeholder="orderId" type="number" name="orderId" />
+            <button type="submit"> clear cart </button>
+          </form>
+
+        </div>
+
+        <div>
+          <h3> add order item below </h3>
           <p> don't try changing quantity </p>
           <form onSubmit={this.handleNewItem}>
             <p> user id </p>
@@ -61,7 +76,7 @@ class TestCart extends Component {
           </form>
 
         </div>
-        <h1> increment item quantity below </h1>
+        <h3> increment item quantity below </h3>
 
         <form onSubmit={this.handleIncrement}>
           <p> order id </p>

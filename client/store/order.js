@@ -5,17 +5,18 @@ const chalk = require('chalk')
 const GET_ORDER = 'GET_ORDER'
 const MOD_STATUS = 'MOD_STATUS'
 const ADD_PRODUCT = 'ADD_PRODUCT'
-// const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 const INCREMENT = 'INCREMENT'
+const CLEAR = 'CLEAR'
 // const DECREMENT = 'DECREMENT' // possibly same as increment
-
+// const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 
 //ACTION CREATORS
 const getOrder = (orderItems) => ({ type: GET_ORDER, orderItems: orderItems })
-const modStatus = (updatedOrder) => ({ type: MOD_STATUS, order: updatedOrder }) // not implemented yet
+const modStatus = (updatedOrder) => ({ type: MOD_STATUS, order: updatedOrder })
 const addProduct = (order) => ({ type: ADD_PRODUCT, order: order })
-// const removeProduct = (order) => ({ type: REMOVE_PRODUCT, order: order })
 const increment = (orderItem) => ({ type: INCREMENT, orderItem: orderItem })
+// const clear = () => ({ type: CLEAR, order: [] })
+// const removeProduct = (order) => ({ type: REMOVE_PRODUCT, order: order })
 
 //THUNK CREATORS
 
@@ -28,12 +29,9 @@ export function changeStatusDb(userId, status) {
         dispatch(modStatus(ordered))
       })
   }
-
 }
 
-
 export function incrementInDb(orderId, productId) {
-
   return function thunk(dispatch) {
     console.log('running')
     return axios.put(`api/orders/${orderId}/update/${productId}`)
@@ -63,7 +61,7 @@ export function fetchOrder(userId) {
       .then(res => res.data)
       .then(orderItems => {
         console.log(orderItems.length)
-        if (orderItems.length)  dispatch(getOrder(orderItems))
+        if (orderItems.length) dispatch(getOrder(orderItems))
         else console.log('no dispatch')
       })
   }
@@ -76,6 +74,16 @@ export function changeOrderStatus(orderId, status) {
       .then(res => res.data)
       .then(updatedOrder => {
         dispatch(modStatus(updatedOrder)) // we may want to dispatch first and eager load
+      })
+  }
+}
+// delete an entire order
+export function destroyOrderInDb(orderId) {
+  return function thunk(dispatch) {
+    return axios.delete(`api/orders/${orderId}`)
+      .then(res => res.data)
+      .then(() => {
+        dispatch(modStatus())
       })
   }
 }
