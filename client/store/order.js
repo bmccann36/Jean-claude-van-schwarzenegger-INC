@@ -82,6 +82,7 @@ export function changeOrderStatus(orderId, status) {
 // REDUCER
 
 export default function (order = [], action) {
+
   switch (action.type) {
 
     case GET_ORDER:
@@ -91,10 +92,13 @@ export default function (order = [], action) {
       return [...order, action.order]
 
     case INCREMENT: // replace the orderItem in order array with new one with incremented quantity
-      return order.map(item => {
-        return (item.id === action.orderItem.productId) ?
-          action.orderItem : item
+      // console.log(action.orderItem.productId)
+      return order.map(cartItem => {
+        if (cartItem.productId === action.orderItem.productId) return action.orderItem
+        else return cartItem
       })
+
+
 
     case MOD_STATUS: // empties cart (sets back to empty array)
       return []
