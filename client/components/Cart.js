@@ -1,40 +1,32 @@
 import React, { Component } from 'react'
-import {NavLink, withRouter} from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
+import store from '../store'
 import { connect } from 'react-redux'
-import axios from 'axios'
-import { incrementInDb, addProductToDb, changeStatusDb } from '../store/order'
-import user from "../store/user";
+
+import { incrementInDb, addProductToDb } from '../store/order'
 
 
 class Cart extends Component {
+  constructor(props) {
+    super(props)
 
-    constructor(props){
-      super(props)
-
-      this.state = {
-           details : {}
-      }
-    }
-
-
-  componentDidMount() {
-    let userId = this.props.user.id;
-
-    axios.get(`/api/orders/detail/${userId}`)
-      .then(res=> res.data)
-      .then(details => this.setState(details))
   }
 
 
+  render() {
+    let products
+    let orderItems
+    if (this.props) {
+      products = this.props.product
+      orderItems = this.props.order
+    }
+  orderItems.forEach( orderItem => {
+    const getDetail = findProduct(products, orderItem.productId)
+    orderItem.details = getDetail[0]
+  })
+  console.log(orderItems, 'orderItems')
 
-   render(){
-     console.log('details', this.state)
-
-
-     let orders = this.props.order;
-     let products = this.props.product;
-
-   return (
+    return (
 
     <div>
 
@@ -80,24 +72,10 @@ class Cart extends Component {
             </form>
           </div>
       </div>
-
-
-       <ul>
-
-    </ul>
-
-      <NavLink to="/checkout">
-        <button className="sub-btn"><small>Checkout</small></button>
-      </NavLink>
-
-
+      </div>
     </div>
-    </div>
-  )
-   }
+    )}}
 
-
-}
 
 const mapStateToProps = (state) => {
   return {
@@ -110,3 +88,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = { incrementInDb, addProductToDb }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart))
+
+
+function findProduct(products, productId) {
+  return products.filter(product => productId === product.id)
+}
+

@@ -22,7 +22,10 @@ router.get('/user/:userId', (req, res, next) => {
 		.catch(next)
 })
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 // ORDER DETAILS
 router.get('/detail/:userId', (req, res, next) => {
 	Order.findAll({
