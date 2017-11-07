@@ -1,5 +1,7 @@
 body {
-  background: #607D8B;
+  background-image: url("https://i.pinimg.com/736x/b9/84/75/b984750467f7b4b000f03977cc1d2ca4--s-arcade-tao.jpg");
+  margin : 0;
+  color: white;
 }
 
 h1 {
@@ -11,20 +13,54 @@ img {
   width: 15em
 }
 
+nav {
+  align-content: center;
+  background: rgb(5, 5, 82);
+  text-align: center;
+  color: white;
+}
+
+.nav-bar {
+  color: white;
+  font-size: 20px; 
+}
+
+span {
+  color: white;
+  font-size: 20px; 
+}
+
+nav h1 {
+  font-size: 2.5em;
+  display: inline;
+  color: rgb(255, 94, 0);
+}
+
+nav img {
+  height: 8em;
+  width: 8em;
+}
+
+#vhs {
+  position: absolute;
+  left: 0;
+}
+
+#rad {
+  position: absolute;
+  right: 0;
+}
 
 li {
   float: left;
   flex: auto;
 }
 
-span {
-  font-size: 25px;
-  color: white;
-}
-
 li a {
   display: block;
-  color: black;
+  font-size: 20px;
+  color: rgb(241, 50, 209);
+  font-weight: bold;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -35,8 +71,12 @@ li a:hover:not(.active) {
 }
 
 .active {
-  background-color: #2962FF;
   border-radius: 5px;
   margin: 5px;
   padding:5px;
+}
+
+.center {
+  display: block;
+  margin: auto;
 }
