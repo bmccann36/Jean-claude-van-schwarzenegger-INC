@@ -13,11 +13,13 @@ const User = db.define('user', {
   },
   firstName:{
     type:Sequelize.STRING,
-    allowNull:false
+    allowNull:true,
+    defaultValue:'JCVS'
   },
   lastName:{
     type:Sequelize.STRING,
-    allowNull:false
+    allowNull:true,
+    defaultValue:'User'
   },
   password: {
     type: Sequelize.STRING,
@@ -26,7 +28,8 @@ const User = db.define('user', {
   status:{
     type: Sequelize.ENUM,
     values: ['member','admin'],
-    allowNull:true
+    allowNull:false,
+    defaultValue:'member'
   },
   address:{
     type: Sequelize.STRING,
