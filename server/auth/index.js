@@ -6,7 +6,7 @@ router.post('/login', (req, res, next) => {
   User.findOne({where: {email: req.body.email}})
     .then(user => {
       if (!user) {
-        res.status(401).send('User not found')
+        res.status(401).send('User not found. please Signup if you\'re not a member.')
       } else if (!user.correctPassword(req.body.password)) {
         res.status(401).send('Incorrect password')
       } else {

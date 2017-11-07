@@ -9,7 +9,8 @@ export {Login, Signup} from './auth-form'
 
 export { default as AllProduct } from './AllProduct';
 export { default as SingleProduct } from './SingleProduct'
-export { Cart } from './Cart'
+export { default as Cart } from './Cart'
+export { default as Checkout} from './Checkout'
 export { Review } from './Review'
 export { default as NavBar } from './NavBar';
 

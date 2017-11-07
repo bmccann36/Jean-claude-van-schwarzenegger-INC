@@ -33,6 +33,16 @@ async function seed() {
     Product.create({ name: 'die hard', category: 'action', description: 'bruce willis is a badass', photos: 'https://i.ytimg.com/vi/aBobdJLdADM/hqdefault.jpg', stock: 10, price: 10 }),
     Product.create({ name: 'robocop', category: 'action', description: 'cop dies, comes back a robot', photos: 'http://sm.askmen.com/askmen_in/photo/default/actionmovies-th_3x5j.jpg', stock: 20, price: 10 }),
     Product.create({ name: 'the money pit', category: 'comedy', description: 'more tome hanks shenanigans', photos: 'http://img.wennermedia.com/social/rs-180704-AM.jpg', stock: 30, price: 10 }),
+    Product.create({ name: 'beverly hills cop', category: 'action', description: 'eddie murphy in his prime', photos: 'http://www.sbs.com.au/movies/sites/sbs.com.au.film/files/styles/double/public/guardians-galaxy-vol-2-backdrop.jpg?itok=uFYJwjpa&mtime=1493017486', stock: 10, price: 10 }),
+    Product.create({ name: 'tuner and hooch', category: 'comedy', description: 'animals tom hanks + dog', photos: 'https://i.ytimg.com/vi/kEJ0VY9jW9E/maxresdefault.jpg', stock: 18, price: 10 }),
+    Product.create({ name: 'die hard', category: 'action', description: 'bruce willis is a badass', photos: 'https://i.ytimg.com/vi/aBobdJLdADM/hqdefault.jpg', stock: 10, price: 10 }),
+    Product.create({ name: 'robocop', category: 'action', description: 'cop dies, comes back a robot', photos: 'http://sm.askmen.com/askmen_in/photo/default/actionmovies-th_3x5j.jpg', stock: 20, price: 10 }),
+    Product.create({ name: 'the money pit', category: 'comedy', description: 'more tome hanks shenanigans', photos: 'http://img.wennermedia.com/social/rs-180704-AM.jpg', stock: 30, price: 10 }),
+    Product.create({ name: 'beverly hills cop', category: 'action', description: 'eddie murphy in his prime', photos: 'http://www.sbs.com.au/movies/sites/sbs.com.au.film/files/styles/double/public/guardians-galaxy-vol-2-backdrop.jpg?itok=uFYJwjpa&mtime=1493017486', stock: 10, price: 10 }),
+    Product.create({ name: 'tuner and hooch', category: 'comedy', description: 'animals tom hanks + dog', photos: 'https://i.ytimg.com/vi/kEJ0VY9jW9E/maxresdefault.jpg', stock: 18, price: 10 }),
+    Product.create({ name: 'die hard', category: 'action', description: 'bruce willis is a badass', photos: 'https://i.ytimg.com/vi/aBobdJLdADM/hqdefault.jpg', stock: 10, price: 10 }),
+    Product.create({ name: 'robocop', category: 'action', description: 'cop dies, comes back a robot', photos: 'http://sm.askmen.com/askmen_in/photo/default/actionmovies-th_3x5j.jpg', stock: 20, price: 10 }),
+    Product.create({ name: 'the money pit', category: 'comedy', description: 'more tome hanks shenanigans', photos: 'http://img.wennermedia.com/social/rs-180704-AM.jpg', stock: 30, price: 10 }),
     Product.create({ name: 'beverly hills cop', category: 'action', description: 'eddie murphy in his prime', photos: 'http://www.sbs.com.au/movies/sites/sbs.com.au.film/files/styles/double/public/guardians-galaxy-vol-2-backdrop.jpg?itok=uFYJwjpa&mtime=1493017486', stock: 10, price: 10 })
   ])
   const ordersPromise = []
