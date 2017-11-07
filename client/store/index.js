@@ -7,11 +7,13 @@ import user from './user'
 // addtions to boilerplate below
 import products from './product'
 import order from './order'
+import review from './review'
 
 const reducer = combineReducers({
   user,
   products,
-  order
+  order,
+  review
 })
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
@@ -23,6 +25,7 @@ export default store
 export * from './user'
 export * from './product'  // have to export
 export * from './order'
+export * from './review'
 export * from './auth';
 
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom'
 import { connect } from 'react-redux'
+import Review from './Review.js'
 
 import { incrementInDb, addProductToDb, changeStatusDb } from '../store/order'
 
@@ -46,9 +47,9 @@ class SingleProduct extends Component {
 
       const { products } = this.props;
       const productId = Number(this.props.match.params.productId);
-
+      console.log(singleProduct)
       const singleProduct = products.filter(product => product.id === productId);
-
+      console.log("SINGLE PRODUCT", singleProduct)
             //console.log('productId ', productId)
 
           return (
@@ -69,6 +70,7 @@ class SingleProduct extends Component {
               <NavLink to="/cart" >
                 <button className="sub-btn" type="submit" onClick={this.handleNewItem}>Add To Cart</button>
               </NavLink>
+              <Review />
             </div>
           )
      }

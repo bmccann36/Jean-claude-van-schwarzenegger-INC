@@ -10,7 +10,7 @@ router.get('/user/:userId', (req, res, next) => {
 			return order.id || 0
 		})
 		.then(orderId => {
-			OrderProduct.findAll({
+			return OrderProduct.findAll({
 				where: {
 					orderId: orderId
 				}
