@@ -20,8 +20,8 @@ class Routes extends Component {
   componentDidMount () {
     const productsThunk = fetchProducts()
     store.dispatch(productsThunk)
-    // const orderThunk = fetchOrder(1) // hard coding an orderID
-    // store.dispatch(orderThunk)
+    const orderThunk = fetchOrder(1) // takes userId
+    store.dispatch(orderThunk)
     this.props.loadInitialData()
   }
 

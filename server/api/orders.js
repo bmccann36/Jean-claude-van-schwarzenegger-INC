@@ -2,6 +2,26 @@ const router = require('express').Router()
 const { Order, Product, OrderProduct } = require('../db/models')
 
 
+// find a pending order return all order items
+router.get('/user/:userId', (req, res, next) => {
+	Order.findOne({
+		where: { userId: req.params.userId, status: 'pending' }
+	})
+		.then(order => {
+			return order.id || 0
+		})
+		.then(orderId => {
+			OrderProduct.findAll({
+				where: {
+					orderId: orderId
+				}
+			})
+				.then(res.send.bind(res))
+		})
+		.catch(next)
+})
+
+
 // new route with OrderProduct - need something like this for delete
 router.put('/:orderId/update/:productId', (req, res, next) => {
 
@@ -50,10 +70,10 @@ router.get('/:userId', (req, res, next) => {
 
 
 // what does this do? will never fire  -Brian
-router.get('/:userId/order/:orderId', (req, res, next) => {
-	Order.findById(req.params.orderId, { include: [{ all: true }] })
-		.then(order => res.json(order));
-})
+// router.get('/:userId/order/:orderId', (req, res, next) => {
+// 	Order.findById(req.params.orderId, { include: [{ all: true }] })
+// 		.then(order => res.json(order));
+// })
 
 // when a user adds one item to the cart
 // we create a new order

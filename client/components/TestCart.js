@@ -51,6 +51,7 @@ class TestCart extends Component {
 
         <div>
           <h1> add order item below </h1>
+          <p> don't try changing quantity </p>
           <form onSubmit={this.handleNewItem}>
             <p> user id </p>
             <input placeholder="userId" type="number" defaultValue="1" name="userId" />
