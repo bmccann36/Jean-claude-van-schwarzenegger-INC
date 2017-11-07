@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import  axios  from 'axios'
 
 import store from '../store'
 import { incrementInDb, addProductToDb, changeStatusDb, destroyOrderInDb } from '../store/order'
@@ -41,6 +42,12 @@ class TestCart extends Component {
     ev.preventDefault()
     const clearThunk = destroyOrderInDb(ev.target.orderId.value)
     store.dispatch(clearThunk)
+  }
+
+  componentDidMount() {
+    axios.get('/api/orders/detail/1')
+    .then(res=> res.data)
+    .then(details => console.log(details))
   }
 
 

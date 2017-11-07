@@ -20,6 +20,21 @@ router.get('/user/:userId', (req, res, next) => {
 		.catch(next)
 })
 
+router.get('/detail/:orderId', (req, res, next) => {
+	Order.findAll({
+		where: {
+			userId: req.params.orderId
+		},
+		include: [{ model: Product }]
+	})
+		.then(order => res.json(order))
+})
+
+
+// where: {
+// 	userId: req.params.userId
+// },
+// include: [{ model: Product }]
 
 // INCREMENT -- thunk = incrementInDb
 router.put('/:orderId/update/:productId', (req, res, next) => {
