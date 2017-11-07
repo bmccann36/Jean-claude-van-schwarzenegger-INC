@@ -20,10 +20,12 @@ router.get('/user/:userId', (req, res, next) => {
 		.catch(next)
 })
 
-router.get('/detail/:orderId', (req, res, next) => {
+// ORDER DETAILS
+router.get('/detail/:userId', (req, res, next) => {
 	Order.findAll({
 		where: {
-			userId: req.params.orderId
+			userId: req.params.userId,
+			status: 'pending'
 		},
 		include: [{ model: Product }]
 	})
@@ -31,14 +33,10 @@ router.get('/detail/:orderId', (req, res, next) => {
 })
 
 
-// where: {
-// 	userId: req.params.userId
-// },
-// include: [{ model: Product }]
 
 // INCREMENT -- thunk = incrementInDb
 router.put('/:orderId/update/:productId', (req, res, next) => {
-
+		// res.send(req.body)
 	OrderProduct.findOne({
 		where: {
 			productId: req.params.productId,
@@ -48,7 +46,7 @@ router.put('/:orderId/update/:productId', (req, res, next) => {
 		//UPDATES QUANTITY BY 1 OR SETS IT TO 1
 		.then((orderItem) => {
 			return orderItem.update({
-				quantity: orderItem.quantity + 1
+				quantity: req.body.quantity
 			})
 		})
 		//IF YOU REACHED THIS EVERYTHING WENT RIGHT
