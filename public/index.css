@@ -1,5 +1,5 @@
 body {
-  background: #26A69A;
+  background: #607D8B;
 }
 
 h1 {
@@ -7,8 +7,8 @@ h1 {
 }
 
 img {
-  width: 20em;
-  height: 20em;
+  height: 25em;
+  width: 15em
 }
 
 
@@ -24,14 +24,14 @@ span {
 
 li a {
   display: block;
-  color: white;
+  color: black;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
 }
 
 li a:hover:not(.active) {
-  background-color: #111;
+  background-color: rgb(117, 185, 216);
 }
 
 .active {

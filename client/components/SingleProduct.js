@@ -27,7 +27,7 @@ class SingleProduct extends Component {
       const { products } = this.props;
       const productId = Number(this.props.match.params.productId);
       const singleProduct = products.filter(product => product.id === productId);
-      console.log('RETURNED ORDER ********', this.props.order)
+      console.log('RETURNED ORDER ********', store.getState())
       
           return (
             <div>

@@ -6,7 +6,7 @@ import { incrementInDb, addProductToDb, changeStatusDb } from '../store/order'
 
 
  const Cart = (props) => {
-  console.log("in cart", store.getState())
+  console.log("in cart", store.getState(), 'STATE *****', store.getState())
   return (
     <div>
       <h1>Inside Your Shopping Cart</h1>
