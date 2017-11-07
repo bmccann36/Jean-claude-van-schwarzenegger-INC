@@ -6,19 +6,35 @@ import { incrementInDb, addProductToDb, changeStatusDb } from '../store/order'
 
 
  const Cart = (props) => {
-  console.log(props, "in cart")
-  return (
+
+
+   let orders = props.order;
+   let products = props.product;
+   //let name;
+   //console.log(" order in cart.js ", props);
+   //console.log(" order ", orders);
+  // console.log(" product ", products);
+
+
+
+   return (
+
     <div>
-      <h1>Inside Your Shopping Cart</h1>
-      <hr />
-      <h1>Cart Empty!!!!!!!</h1>
+       <ul>
+      {
+        orders.length && orders.map(order, i => {
 
-      {/*<NavLink to="/products">*/}
-         {/*<button onClick={() => alert('Order Successfully Submitted')}>Checkout As Guest</button>*/}
-      {/*</NavLink>*/}
+        let name = (products.filter(product => ( product.id === order.orderId)))[i].name
+           console.log('name', name)
+          return (
+            <h1 key={order.productId}>{order.quantity}</h1>
+          )
+        })
+        }
+     </ul>
 
-      <NavLink to="/login">
-        <button>Checkout As User</button>
+      <NavLink to="/checkout">
+        <button className="sub-btn"><small>Checkout</small></button>
       </NavLink>
 
 

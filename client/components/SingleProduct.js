@@ -15,10 +15,11 @@ class SingleProduct extends Component {
    }
 
   handleNewItem(ev, productId) {
+    const id = Number(this.props.match.params.productId);
     ev.preventDefault()
     //const userId = ev.target.userId.value
     //const productId = ev.target.productId.value
-    const newItemThunk = addProductToDb(1, productId)
+    const newItemThunk = addProductToDb(1, id)
     store.dispatch(newItemThunk)
   }
   //
@@ -48,7 +49,7 @@ class SingleProduct extends Component {
 
       const singleProduct = products.filter(product => product.id === productId);
 
-      console.log('productId ', productId)
+            //console.log('productId ', productId)
 
           return (
             <div>
@@ -59,14 +60,14 @@ class SingleProduct extends Component {
                   <div>
                     <h1>{singleProduct[0].name}</h1>
                     <img src={singleProduct[0].photos} alt="Image Unavailable"/>
-                    <p>Description Goes Here!</p>
-                    <h1>Category goes here:</h1>
-                    <h1>Stocks goes here:</h1>
-                    <h1>Price:</h1>
+                    <h1>{`Description: ${singleProduct[0].description}`}</h1>
+                    <h1>{`Category: ${singleProduct[0].category}`}</h1>
+                    <h1>{`Stocks: ${singleProduct[0].price}`}</h1>
+                    <h1>{`Price: $ ${singleProduct[0].price}`}</h1>
                   </div>
               }
               <NavLink to="/cart" >
-                <button type="submit" onClick={this.handleNewItem}>Add To Cart</button>
+                <button className="sub-btn" type="submit" onClick={this.handleNewItem}>Add To Cart</button>
               </NavLink>
             </div>
           )
