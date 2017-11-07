@@ -15,10 +15,11 @@ class SingleProduct extends Component {
    }
 
   handleNewItem(ev, productId) {
+    const id = Number(this.props.match.params.productId);
     ev.preventDefault()
     //const userId = ev.target.userId.value
     //const productId = ev.target.productId.value
-    const newItemThunk = addProductToDb(1, productId)
+    const newItemThunk = addProductToDb(1, id)
     store.dispatch(newItemThunk)
   }
   //
@@ -48,7 +49,7 @@ class SingleProduct extends Component {
 
       const singleProduct = products.filter(product => product.id === productId);
 
-      console.log('productId ', productId)
+            console.log('productId ', productId)
 
           return (
             <div>
@@ -66,7 +67,7 @@ class SingleProduct extends Component {
                   </div>
               }
               <NavLink to="/cart" >
-                <button type="submit" onClick={this.handleNewItem}>Add To Cart</button>
+                <button className="sub-btn" type="submit" onClick={this.handleNewItem}>Add To Cart</button>
               </NavLink>
             </div>
           )

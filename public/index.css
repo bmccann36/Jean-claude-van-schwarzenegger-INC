@@ -2,7 +2,7 @@ body {
   background: #26A69A;
 }
 
-h1 {
+h1{
   color: white;
 }
 
@@ -20,6 +20,33 @@ li {
 span {
   font-size: 25px;
   color: white;
+}
+
+input {
+  width: 14em;
+  height: 2.5em;
+  border-radius: .5em;
+  background-color: #f2f2f2;
+  font-size: 18px;
+  margin-bottom: 1.5em;
+}
+
+.sub-btn {
+  background-color: #1A237E;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 0.5em;
+  width: 14em;
+  margin-left: 1em;
+}
+
+small {
+   color: white;
+   font-size: 14px;
 }
 
 li a {
