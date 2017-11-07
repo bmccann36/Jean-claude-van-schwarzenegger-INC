@@ -1,37 +1,52 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {NavLink, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
-import store from '../store'
+import axios from 'axios'
 import { incrementInDb, addProductToDb, changeStatusDb } from '../store/order'
+import user from "../store/user";
 
 
- const Cart = (props) => {
+class Cart extends Component {
+
+    constructor(props){
+      super(props)
+
+      this.state = {
+           details : {}
+      }
+    }
+
+  componentDidMount() {
+
+      let userId = this.props.user.id
+
+    axios.get(`/api/orders/detail/${userId}`)
+      .then(res=> res.data)
+      .then(details => this.setState(details))
+
+  }
 
 
-   let orders = props.order;
-   let products = props.product;
-   //let name;
-   //console.log(" order in cart.js ", props);
-   //console.log(" order ", orders);
-  // console.log(" product ", products);
+   render(){
+     const  detail  = this.state
+     //let details = this.state.details.length && this.state['0'].products
+     console.log('details', detail);
 
-
+     let orders = this.props.order;
+     let products = this.props.product;
 
    return (
 
     <div>
-       <ul>
-      {
-        orders.length && orders.map(order, i => {
-
-        let name = (products.filter(product => ( product.id === order.orderId)))[i].name
-           console.log('name', name)
-          return (
-            <h1 key={order.productId}>{order.quantity}</h1>
-          )
-        })
-        }
-     </ul>
+       {/*<ul>*/}
+      {/*{*/}
+        {/*orders.length && orders.map(order=> {*/}
+          {/*return (*/}
+            {/*<h1 key={order.productId}>{order.quantity}</h1>*/}
+          {/*)*/}
+        {/*})*/}
+      {/*}*/}
+    {/*</ul>*/}
 
       <NavLink to="/checkout">
         <button className="sub-btn"><small>Checkout</small></button>
@@ -40,12 +55,16 @@ import { incrementInDb, addProductToDb, changeStatusDb } from '../store/order'
 
     </div>
   )
+   }
+
+
 }
 
 const mapStateToProps = (state) => {
   return {
     product: state.products,
-    order: state.order
+    order: state.order,
+    user: state.user
   }
 }
 
