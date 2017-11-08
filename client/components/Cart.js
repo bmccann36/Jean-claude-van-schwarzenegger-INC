@@ -1,14 +1,33 @@
-import React  from 'react'
+import React, { Component } from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import axios from 'axios'
 
 import { incrementInDb, adddetailToDb } from '../store/order'
 
 
-function Cart (props) {
-  let price = 0;
-  const { detail }  = props;
+class Cart extends Component {
+  constructor() {
+    super()
+    this.state = {details:[]}
+  }
 
+  componentDidMount() {
+    console.log(this.props.user, 'in cart')
+    const userId = this.props.user.id
+    axios.get(`/api/orders/detail/${userId}`)
+      .then(res => res.data)
+      .then(details => {
+        console.log(details, 'details')
+        this.setState({details: details})
+      })
+      // console.log(this.state, 'state')
+
+  }
+
+  render() {
+    const detail = this.state.details
+    let price = 0
     return (
       <div>
         <table>
@@ -47,7 +66,8 @@ function Cart (props) {
     <button className="sub-btn"><small>Checkout</small></button>
   </NavLink>
       </div>
-)
+    )
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -63,8 +83,4 @@ const mapDispatchToProps = { incrementInDb, adddetailToDb }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart))
 
-//
-// function finddetail(details, detailId) {
-//   return details.filter(detail => detailId === detail.id)
-// }
 

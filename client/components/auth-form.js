@@ -15,11 +15,11 @@ const AuthForm = (props) => {
       <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="email"><small>Email</small></label>
-          <input name="email" type="text" />
+          <input name="email" defaultValue= "hi@gmail.com" type="text" />
         </div>
         <div>
           <label htmlFor="password"><small>Password</small></label>
-          <input name="password" type="password" />
+          <input name="password" defaultValue= "password" type="password" />
         </div>
         <div>
           <button type="submit" className="sub-btn"><small>{displayName}</small></button>
@@ -60,6 +60,7 @@ const mapDispatch = (dispatch) => {
       evt.preventDefault()
       const formName = evt.target.name
       const email = evt.target.email.value
+
       const password = evt.target.password.value
       dispatch(auth(email, password, formName))
         //alert(`You\'re Signed in as a Member. Have Fun Shopping, Don\'t Forget Tip!!!!!` )

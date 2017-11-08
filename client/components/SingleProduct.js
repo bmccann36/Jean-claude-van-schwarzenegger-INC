@@ -15,13 +15,12 @@ class SingleProduct extends Component {
 
   handleNewItem(ev) {
     ev.preventDefault()
-    const newItemThunk = addProductToDb(1, id)
-    alert('ITEM ADDED TO CART');
-    // console.log('WHEN IS THIS LOGGING???')
-    const userId = store.getState().user.id
-    const id = Number(this.props.match.params.productId)
-    const newItemThunk = addProductToDb(userId, id)
+    // console.log(this.props.user.id, 'in handle')
+    const productId = Number(this.props.match.params.productId)
+    const userId = this.props.user.id
+    const newItemThunk = addProductToDb(userId, productId)
     store.dispatch(newItemThunk)
+    alert('ITEM ADDED TO CART');
   }
 
     render(){
@@ -60,6 +59,7 @@ const mapStateToProps = function (state) {
   return {
     products: state.products,  //product Or products  ????
     order: state.order,
+    user: state.user
   }
 }
 

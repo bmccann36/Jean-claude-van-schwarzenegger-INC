@@ -8,6 +8,9 @@ import {Main, Login, Signup, UserHome, Review, SingleProduct, AllProduct, Checko
 import Cart from './components/Cart'
 import  axios  from 'axios'
 
+
+
+import TestCart from './components/TestCart'
 import store from './store'
 import { fetchOrder } from './store/order'
 import { me, fetchProducts, fetchDetails } from './store'
@@ -24,17 +27,14 @@ class Routes extends Component {
   }
     componentDidMount (props) {
 
-    // let userId = this.props.user.id
-    //   console.log('props', this.props)
-
     const productsThunk = fetchProducts()
     store.dispatch(productsThunk)
 
-    const orderThunk = fetchOrder(1) // takes userId
-    store.dispatch(orderThunk)
+    // const orderThunk = fetchOrder(1) // takes userId
+    // store.dispatch(orderThunk)
 
-    const detailThunk = fetchDetails(1) // takes userId
-    store.dispatch(detailThunk)
+    // const detailThunk = fetchDetails(1) // takes userId
+    // store.dispatch(detailThunk)
 
     this.props.loadInitialData()
 }
@@ -55,7 +55,7 @@ class Routes extends Component {
             <Route path="/signup" component={Signup} />
             <Route exact path="/products" component={AllProduct} />
             <Route path="/products/:productId" component={SingleProduct} />
-            <Route path="/cart" component={Cart} />
+
             <Route path="/checkout" component={Checkout} />
             <Route path="/reviews" component={Review} />
             <Route path="/home" component={UserHome} />
@@ -63,7 +63,8 @@ class Routes extends Component {
             {
               isLoggedIn &&
                 <Switch>
-                  {/* Routes placed here are only available after logging in */}
+                  <Route path="/test" component={TestCart} />
+                  <Route path="/cart" component={Cart} />
                   <Route path="/home" component={UserHome} />
                 </Switch>
             }
