@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
+import store from '../store'
 
-import { changeOrderStatus  } from '../store/order'
+
+import { changeStatusDb  } from '../store/order'
 
 
 class Cart extends Component {
@@ -31,6 +33,7 @@ class Cart extends Component {
     const statusThunk = changeStatusDb(userId, { status: 'ordered' })
     store.dispatch(statusThunk)
     alert("you're order has been placed, get to da choppa!!")
+    this.setState({details:[]})
   }
 
   render() {
@@ -70,10 +73,10 @@ class Cart extends Component {
           <strong>Sub Total</strong>: ${price} <span id="stotal"></span>
         </p>
 
-  <NavLink to="/products">
+
     <button className="sub-btn" onClick={this.handleSubmit}>
     <small>Checkout</small></button>
-  </NavLink>
+
       </div>
     )
   }
@@ -87,7 +90,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = { changeOrderStatus }
+const mapDispatchToProps = { changeStatusDb }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart))
 

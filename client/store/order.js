@@ -19,7 +19,7 @@ const changeQuant = (orderItem) => ({ type: CHANGE_QUANT, orderItem: orderItem }
 // const removeProduct = (order) => ({ type: REMOVE_PRODUCT, order: order })
 
 //THUNK CREATORS
-
+// this one works
 export function changeStatusDb(userId, status) {
   console.log('status fire')
   return function thunk(dispatch) {
@@ -69,15 +69,15 @@ export function fetchOrder(userId) {
 }
 // I think this one func can take care of all our order changing needs
 // i.e swtiching status will it also handle quantity update?
-export function changeOrderStatus(orderId, status) {
-  return function thunk(dispatch) {
-    return axios.post(`api/orders/${orderId}`, status)
-      .then(res => res.data)
-      .then(updatedOrder => {
-        dispatch(modStatus(updatedOrder)) // we may want to dispatch first and eager load
-      })
-  }
-}
+// export function changeOrderStatus(orderId, status) {
+//   return function thunk(dispatch) {
+//     return axios.post(`api/orders/${orderId}`, status)
+//       .then(res => res.data)
+//       .then(updatedOrder => {
+//         dispatch(modStatus(updatedOrder)) // we may want to dispatch first and eager load
+//       })
+//   }
+// }
 // delete an entire order
 export function destroyOrderInDb(orderId) {
   return function thunk(dispatch) {
