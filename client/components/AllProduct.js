@@ -25,7 +25,6 @@ function AllProduct(props) {
                     </NavLink>
                   </li>
                 ))
-                      // : <h1>No Products in Stock</h1>
             }
 
     </div>

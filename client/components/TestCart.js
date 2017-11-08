@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import  axios  from 'axios'
 
 import store from '../store'
-import { incrementInDb, addProductToDb, changeStatusDb } from '../store/order'
+import { changeQuantInDb, addProductToDb, changeStatusDb, destroyOrderInDb } from '../store/order'
 
 
 class TestCart extends Component {
   constructor(props) {
     super(props)
-    this.handleIncrement = this.handleIncrement.bind(this) // we need this to have access to this components state in the handle submit method, we get orderId from state.order
+    this.handleQuant = this.handleQuant.bind(this) // we need this to have access to this components state in the handle submit method, we get orderId from state.order
     // console.log(this.props, 'testCart props')
   }
 
@@ -20,13 +21,14 @@ class TestCart extends Component {
     store.dispatch(newItemThunk)
   }
 
-  handleIncrement(ev) {
-    ev.preventDefault()// for now getting the orderId off of the state at 'order' in the future probably better to get it from the userId which we will be storing in state -brian
-    // console.log(this.props.order[0].id)
+  handleQuant(ev) {
+    ev.preventDefault()
     const orderId = ev.target.orderId.value
     const productId = ev.target.productId.value
-    const incrementThunk = incrementInDb(orderId, productId)
-    store.dispatch(incrementThunk)
+    const quant = {quantity: ev.target.quant.value}
+    // console.log(orderId, productId, quant)
+    const quantThunk = changeQuantInDb(orderId, productId, quant)
+    store.dispatch(quantThunk)
 
   }
 
@@ -37,6 +39,18 @@ class TestCart extends Component {
     store.dispatch(statusThunk)
   }
 
+  handleClear(ev) {
+    ev.preventDefault()
+    const clearThunk = destroyOrderInDb(ev.target.orderId.value)
+    store.dispatch(clearThunk)
+  }
+
+  componentDidMount() {
+    axios.get('/api/orders/detail/1')
+    .then(res=> res.data)
+    .then(details => console.log(details))
+  }
+
 
   render() {
     let products
@@ -45,12 +59,32 @@ class TestCart extends Component {
     return (
       <div>
         <div>
-          <h1>submit order</h1>
+          <h3>submit order</h3>
           <button type="submit" onClick={this.handleSubmit}> submit </button>
         </div>
 
         <div>
-          <h1> add order item below </h1>
+          <h3>clear cart</h3>
+          <form onSubmit={this.handleClear}>
+            <input placeholder="orderId" type="number" name="orderId" />
+            <button type="submit"> clear cart </button>
+          </form>
+
+          <h3> changeQuantity </h3>
+        <form onSubmit={this.handleQuant}>
+          <p> order id </p>
+          <input placeholder="orderId" type="number" defaultValue="6" name="orderId" />
+          <p> product id </p>
+          <input placeholder="productId" type="number" defaultValue="2" name="productId" />
+          <input  type="number" placeholder= "quantity" name="quant" />
+          <button type="submit"> change </button>
+        </form>
+
+        </div>
+
+        <div>
+          <h3> add order item below </h3>
+          <p> don't try changing quantity </p>
           <form onSubmit={this.handleNewItem}>
             <p> user id </p>
             <input placeholder="userId" type="number" defaultValue="1" name="userId" />
@@ -60,15 +94,7 @@ class TestCart extends Component {
           </form>
 
         </div>
-        <h1> increment item quantity below </h1>
 
-        <form onSubmit={this.handleIncrement}>
-          <p> order id </p>
-          <input placeholder="orderId" type="number" defaultValue="1" name="orderId" />
-          <p> product id </p>
-          <input placeholder="productId" type="number" defaultValue="1" name="productId" />
-          <button type="submit"> add another </button>
-        </form>
 
 
       </div>
@@ -82,11 +108,12 @@ class TestCart extends Component {
 const mapStateToProps = (state) => {
   return {
     // product: state.product,
-    order: state.order
+    order: state.order,
+    user: state.user
   }
 }
 
-const mapDispatchToProps = { incrementInDb, addProductToDb }
+const mapDispatchToProps = { changeQuantInDb, addProductToDb }
 
 // call connect function from react-redux, pass it mapState, and invoke with the presentational component (this component itself)
 export default connect(mapStateToProps, mapDispatchToProps)(TestCart)

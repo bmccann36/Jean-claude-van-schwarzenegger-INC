@@ -5,17 +5,18 @@ const chalk = require('chalk')
 const GET_ORDER = 'GET_ORDER'
 const MOD_STATUS = 'MOD_STATUS'
 const ADD_PRODUCT = 'ADD_PRODUCT'
+const CHANGE_QUANT = 'CHANGE_QUANT'
+const CLEAR = 'CLEAR'
+const DECREMENT = 'DECREMENT' // possibly same as CHANGE_QUANT
 // const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
-const INCREMENT = 'INCREMENT'
-// const DECREMENT = 'DECREMENT' // possibly same as increment
-
 
 //ACTION CREATORS
-const getOrder = (order) => ({ type: GET_ORDER, order: order })
-const modStatus = (updatedOrder) => ({ type: MOD_STATUS, order: updatedOrder }) // not implemented yet
+const getOrder = (orderItems) => ({ type: GET_ORDER, orderItems: orderItems })
+const modStatus = (updatedOrder) => ({ type: MOD_STATUS, order: updatedOrder }) // use this for clear as well
 const addProduct = (order) => ({ type: ADD_PRODUCT, order: order })
+const changeQuant = (orderItem) => ({ type: CHANGE_QUANT, orderItem: orderItem })
+// const decrement = (orderItem) => ({ type: DECREMENT, order: orderItem })
 // const removeProduct = (order) => ({ type: REMOVE_PRODUCT, order: order })
-const increment = (orderItem) => ({ type: INCREMENT, orderItem: orderItem })
 
 //THUNK CREATORS
 
@@ -28,18 +29,16 @@ export function changeStatusDb(userId, status) {
         dispatch(modStatus(ordered))
       })
   }
-
 }
 
 
-export function incrementInDb(orderId, productId) {
-
+export function changeQuantInDb(orderId, productId, quant) {
   return function thunk(dispatch) {
-    console.log('running')
-    return axios.put(`api/orders/${orderId}/update/${productId}`)
+    // console.log(`api/orders/${orderId}/update/${productId}`)
+    return axios.put(`api/orders/${orderId}/update/${productId}`, quant)
       .then(res => res.data)
       .then(orderItem => {
-        dispatch(increment(orderItem))
+        dispatch(changeQuant(orderItem))
       })
   }
 }
@@ -55,14 +54,16 @@ export function addProductToDb(userId, productId) {
   }
 }
 
-
-export function fetchOrder(orderId) {
+// looks for pending orders return order items from OrderProduct
+export function fetchOrder(userId) {
+  console.log(`/api/orders/user/${userId}`)
   return function thunk(dispatch) {
-    return axios.get(`api/orders/${orderId}`)
+    return axios.get(`/api/orders/user/${userId}`)
       .then(res => res.data)
-      .then(order => {
-        console.log(order, 'fetch order')
-        dispatch(getOrder(order))
+      .then(orderItems => {
+        console.log("ORDERITEMS LENGTH", orderItems.length)
+        if (orderItems.length) dispatch(getOrder(orderItems))
+        else console.log('no dispatch')
       })
   }
 }
@@ -77,23 +78,34 @@ export function changeOrderStatus(orderId, status) {
       })
   }
 }
+// delete an entire order
+export function destroyOrderInDb(orderId) {
+  return function thunk(dispatch) {
+    return axios.delete(`api/orders/${orderId}`)
+      .then(res => res.data)
+      .then(() => {
+        dispatch(modStatus())
+      })
+  }
+}
 
 
 // REDUCER
 
 export default function (order = [], action) {
+
   switch (action.type) {
 
     case GET_ORDER:
-      return action.order
+      return action.orderItems
 
     case ADD_PRODUCT:
       return [...order, action.order]
 
-    case INCREMENT: // replace the orderItem in order array with new one with incremented quantity
-      return order.map(item => {
-        return (item.id === action.orderItem.productId) ?
-          action.orderItem : item
+    case CHANGE_QUANT: // replace the orderItem in order array with new one with CHANGE_QUANTed quantity
+      return order.map(cartItem => {
+        if (cartItem.productId === action.orderItem.productId) return action.orderItem
+        else return cartItem
       })
 
     case MOD_STATUS: // empties cart (sets back to empty array)

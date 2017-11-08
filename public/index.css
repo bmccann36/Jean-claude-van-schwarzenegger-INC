@@ -4,7 +4,7 @@ body {
   color: white;
 }
 
-h1 {
+h1{
   color: white;
 }
 
@@ -56,6 +56,43 @@ li {
   flex: auto;
 }
 
+input {
+  width: 14em;
+  height: 2.5em;
+  border-radius: .5em;
+  background-color: #f2f2f2;
+  font-size: 18px;
+  margin-bottom: 1.5em;
+}
+
+.sub-btn {
+  background-color: #1A237E;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 0.5em;
+  width: 14em;
+  margin-left: 1em;
+}
+
+small {
+   color: white;
+   font-size: 14px;
+}
+
+.cart {
+    width: 6em;
+    height:4em;
+    margin-left: 1em;
+    opacity: 0.90;
+    background: #FAFAFA;
+    border-radius: 0.1em;
+
+}
+
 li a {
   display: block;
   font-size: 20px;
@@ -79,4 +116,33 @@ li a:hover:not(.active) {
 .center {
   display: block;
   margin: auto;
+}
+.nav-bar {
+  margin-right: 0.5em;
+  padding: 0.5em;
+}
+
+
+
+/*+++++++++++++++++++++++*/
+table {
+  width:100%;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px;
+  text-align: left;
+}
+table#t01 tr:nth-child(even) {
+  background-color: #eee;
+}
+table#t01 tr:nth-child(odd) {
+  background-color:#fff;
+}
+table#t01 th {
+  background-color: black;
+  color: white;
 }

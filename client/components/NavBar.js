@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {withRouter, NavLink, Link} from 'react-router-dom'
+import {withRouter, NavLink} from 'react-router-dom'
 import {logout} from '../store'
 
 
@@ -27,6 +27,7 @@ function NavBar(props) {
             <NavLink to="/products"><span>Products</span></NavLink>
             <NavLink to="/home"><span>Home</span></NavLink>
             <a href="#" onClick={handleClick}><span>Logout</span></a>
+            <NavLink to="/cart"><span>Cart</span></NavLink>
           </div>
           :
           <div className="nav-bar">
@@ -37,7 +38,7 @@ function NavBar(props) {
             <NavLink to="/cart"><span>Cart</span></NavLink>
           </div>
       }
-      <hr />
+      <hr/>
     </nav>
   )
 }
