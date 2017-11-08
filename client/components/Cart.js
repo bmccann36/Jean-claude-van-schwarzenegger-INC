@@ -1,72 +1,70 @@
-import React, { Component } from 'react'
+import React  from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
-import store from '../store'
 import { connect } from 'react-redux'
 
-import { incrementInDb, addProductToDb } from '../store/order'
+import { incrementInDb, adddetailToDb } from '../store/order'
 
 
-
-class Cart extends Component {
-  constructor(props) {
-    super(props)
-
-  }
-
-
-  render() {
-    let products
-    let orderItems
-    if (this.props) {
-      products = this.props.product
-      orderItems = this.props.order
-    }
-  orderItems.forEach( orderItem => {
-    const getDetail = findProduct(products, orderItem.productId)
-    orderItem.details = getDetail[0]
-  })
-  console.log(orderItems, 'orderItems')
+function Cart (props) {
+  let price = 0;
+  const { detail }  = props;
 
     return (
-
       <div>
-        {/* <ul> */}
-        {/*{*/}
-        {/*orders.length && orders.map(order=> {*/}
-        {/*return (*/}
-        {/*<h1 key={order.productId}>{order.quantity}</h1>*/}
-        {/*)*/}
-        {/*})*/}
-        {/*}*/}
-        {/*</ul>*/}
+        <table>
+          <tr>
+            <th>ITEM</th>
+            <th>QTY</th>
+            <th>UNIT PRICE</th>
+          </tr>
 
-        {/* <NavLink to="/checkout">
-        <button className="sub-btn"><small>Checkout</small></button>
-      </NavLink> */}
-        <h1> HELLO </h1>
 
+        {
+          detail.length && detail.map(d => (
+               //console.log('details', d)
+                d.products.map(product =>{
+                price += (product.price * product.orderProduct.quantity)
+
+                return (
+
+                  <tr>
+                    <td>{product.name}</td>
+                    <td>{product.orderProduct.quantity}</td>
+                    <td>{product.price}</td>
+                  </tr>
+          )})
+
+          ))
+        }
+
+      </table>
+
+        <p id="sub-total">
+          <strong>Sub Total</strong>: ${price} <span id="stotal"></span>
+        </p>
+
+  <NavLink to="/checkout">
+    <button className="sub-btn"><small>Checkout</small></button>
+  </NavLink>
       </div>
-    )
-  }
-
-
+)
 }
 
 const mapStateToProps = (state) => {
   return {
-    product: state.products,
+
     order: state.order,
-    user: state.user
+    user: state.user,
+    detail: state.detail
   }
 }
 
-const mapDispatchToProps = { incrementInDb, addProductToDb }
+const mapDispatchToProps = { incrementInDb, adddetailToDb }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart))
 
+//
+// function finddetail(details, detailId) {
+//   return details.filter(detail => detailId === detail.id)
+// }
 
-
-
-function findProduct(products, productId) {
-  return products.filter(product => productId === product.id)
-}

@@ -6,22 +6,38 @@ import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome, Review, SingleProduct, AllProduct, Checkout} from './components'
 import Cart from './components/Cart'
-
+import  axios  from 'axios'
 
 import store from './store'
 import { fetchOrder } from './store/order'
-import { me, fetchProducts } from './store'
+import { me, fetchProducts, fetchDetails } from './store'
+
 
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount () {
+
+  constructor(props){
+    super(props)
+  }
+    componentDidMount (props) {
+
+    // let userId = this.props.user.id
+    //   console.log('props', this.props)
+
     const productsThunk = fetchProducts()
     store.dispatch(productsThunk)
+
+    const orderThunk = fetchOrder(1) // takes userId
+    store.dispatch(orderThunk)
+
+    const detailThunk = fetchDetails(1) // takes userId
+    store.dispatch(detailThunk)
+
     this.props.loadInitialData()
-  }
+}
 
 
 
@@ -42,6 +58,7 @@ class Routes extends Component {
             <Route path="/cart" component={Cart} />
             <Route path="/checkout" component={Checkout} />
             <Route path="/reviews" component={Review} />
+            <Route path="/home" component={UserHome} />
 
             {
               isLoggedIn &&
@@ -68,7 +85,8 @@ const mapState = (state) => {
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
     product: state.product,
-    order: state.order
+    order: state.order,
+    user: state.user
   }
 }
 

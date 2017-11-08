@@ -15,6 +15,8 @@ class SingleProduct extends Component {
 
   handleNewItem(ev) {
     ev.preventDefault()
+    const newItemThunk = addProductToDb(1, id)
+    alert('ITEM ADDED TO CART');
     // console.log('WHEN IS THIS LOGGING???')
     const userId = store.getState().user.id
     const id = Number(this.props.match.params.productId)
@@ -27,8 +29,9 @@ class SingleProduct extends Component {
       const { products } = this.props;
       const productId = Number(this.props.match.params.productId);
       const singleProduct = products.filter(product => product.id === productId);
-      console.log('RETURNED ORDER ********', store.getState())
-      
+
+      // console.log('RETURNED ORDER ********', store.getState())
+
           return (
             <div>
               {
@@ -47,6 +50,7 @@ class SingleProduct extends Component {
               <NavLink to="/cart" >
                 <button className="sub-btn" type="submit" onClick={this.handleNewItem}>Add To Cart</button>
               </NavLink>
+
             </div>
           )
      }

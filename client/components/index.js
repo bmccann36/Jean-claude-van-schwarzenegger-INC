@@ -13,6 +13,8 @@ export { default as Cart } from './Cart'
 export { default as Checkout} from './Checkout'
 export { Review } from './Review'
 export { default as NavBar } from './NavBar';
+export { default as GetUserId } from './Cart'
+
 
 
 
