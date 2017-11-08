@@ -5,17 +5,17 @@ const chalk = require('chalk')
 const GET_ORDER = 'GET_ORDER'
 const MOD_STATUS = 'MOD_STATUS'
 const ADD_PRODUCT = 'ADD_PRODUCT'
-const INCREMENT = 'INCREMENT'
+const CHANGE_QUANT = 'CHANGE_QUANT'
 const CLEAR = 'CLEAR'
-// const DECREMENT = 'DECREMENT' // possibly same as increment
+const DECREMENT = 'DECREMENT' // possibly same as CHANGE_QUANT
 // const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 
 //ACTION CREATORS
 const getOrder = (orderItems) => ({ type: GET_ORDER, orderItems: orderItems })
-const modStatus = (updatedOrder) => ({ type: MOD_STATUS, order: updatedOrder })
+const modStatus = (updatedOrder) => ({ type: MOD_STATUS, order: updatedOrder }) // use this for clear as well
 const addProduct = (order) => ({ type: ADD_PRODUCT, order: order })
-const increment = (orderItem) => ({ type: INCREMENT, orderItem: orderItem })
-// const clear = () => ({ type: CLEAR, order: [] })
+const changeQuant = (orderItem) => ({ type: CHANGE_QUANT, orderItem: orderItem })
+// const decrement = (orderItem) => ({ type: DECREMENT, order: orderItem })
 // const removeProduct = (order) => ({ type: REMOVE_PRODUCT, order: order })
 
 //THUNK CREATORS
@@ -31,13 +31,14 @@ export function changeStatusDb(userId, status) {
   }
 }
 
-export function incrementInDb(orderId, productId) {
+
+export function changeQuantInDb(orderId, productId, quant) {
   return function thunk(dispatch) {
-    console.log('running')
-    return axios.put(`api/orders/${orderId}/update/${productId}`)
+    // console.log(`api/orders/${orderId}/update/${productId}`)
+    return axios.put(`api/orders/${orderId}/update/${productId}`, quant)
       .then(res => res.data)
       .then(orderItem => {
-        dispatch(increment(orderItem))
+        dispatch(changeQuant(orderItem))
       })
   }
 }
@@ -101,7 +102,7 @@ export default function (order = [], action) {
     case ADD_PRODUCT:
       return [...order, action.order]
 
-    case INCREMENT: // replace the orderItem in order array with new one with incremented quantity
+    case CHANGE_QUANT: // replace the orderItem in order array with new one with CHANGE_QUANTed quantity
       return order.map(cartItem => {
         if (cartItem.productId === action.orderItem.productId) return action.orderItem
         else return cartItem
