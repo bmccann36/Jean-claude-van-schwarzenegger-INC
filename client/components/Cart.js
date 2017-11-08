@@ -3,13 +3,14 @@ import { NavLink, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
-import { incrementInDb, adddetailToDb } from '../store/order'
+import { changeOrderStatus  } from '../store/order'
 
 
 class Cart extends Component {
   constructor() {
     super()
     this.state = {details:[]}
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
@@ -22,7 +23,14 @@ class Cart extends Component {
         this.setState({details: details})
       })
       // console.log(this.state, 'state')
+  }
 
+  handleSubmit(ev){
+    ev.preventDefault()
+    const userId = this.props.user.id
+    const statusThunk = changeStatusDb(userId, { status: 'ordered' })
+    store.dispatch(statusThunk)
+    alert("you're order has been placed, get to da choppa!!")
   }
 
   render() {
@@ -62,8 +70,9 @@ class Cart extends Component {
           <strong>Sub Total</strong>: ${price} <span id="stotal"></span>
         </p>
 
-  <NavLink to="/checkout">
-    <button className="sub-btn"><small>Checkout</small></button>
+  <NavLink to="/products">
+    <button className="sub-btn" onClick={this.handleSubmit}>
+    <small>Checkout</small></button>
   </NavLink>
       </div>
     )
@@ -74,12 +83,11 @@ const mapStateToProps = (state) => {
   return {
 
     order: state.order,
-    user: state.user,
-    detail: state.detail
+    user: state.user
   }
 }
 
-const mapDispatchToProps = { incrementInDb, adddetailToDb }
+const mapDispatchToProps = { changeOrderStatus }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart))
 
