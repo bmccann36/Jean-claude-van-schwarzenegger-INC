@@ -17,30 +17,10 @@ class SingleProduct extends Component {
   handleNewItem(ev, productId) {
     const id = Number(this.props.match.params.productId);
     ev.preventDefault()
-    //const userId = ev.target.userId.value
-    //const productId = ev.target.productId.value
     const newItemThunk = addProductToDb(1, id)
+    alert('ITEM ADDED TO CART');
     store.dispatch(newItemThunk)
   }
-  //
-  // handleIncrement(ev) {
-  //   ev.preventDefault()// for now getting the orderId off of the state at 'order' in the future probably better to get it from the userId which we will be storing in state -brian
-  //   // console.log(this.props.order[0].id)
-  //   const orderId = ev.target.orderId.value
-  //   const productId = ev.target.productId.value
-  //   const incrementThunk = incrementInDb(orderId, productId)
-  //   store.dispatch(incrementThunk)
-  //
-  // }
-  //
-  // handleSubmit(ev) {
-  //   ev.preventDefault()
-  //   console.log('you submitted')
-  //   const statusThunk = changeStatusDb(1, { status: 'ordered' })
-  //   store.dispatch(statusThunk)
-  // }
-
-
 
     render(){
 
@@ -48,8 +28,6 @@ class SingleProduct extends Component {
       const productId = Number(this.props.match.params.productId);
 
       const singleProduct = products.filter(product => product.id === productId);
-
-            //console.log('productId ', productId)
 
           return (
             <div>
@@ -69,6 +47,7 @@ class SingleProduct extends Component {
               <NavLink to="/cart" >
                 <button className="sub-btn" type="submit" onClick={this.handleNewItem}>Add To Cart</button>
               </NavLink>
+
             </div>
           )
      }

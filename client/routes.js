@@ -10,18 +10,26 @@ import Cart from './components/Cart'
 
 import store from './store'
 import { fetchOrder } from './store/order'
-import { me, fetchProducts } from './store'
+import { me, fetchProducts, fetchDetails } from './store'
 
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount () {
+  componentDidMount (props) {
+
+    let userId = this.props.user.id
+      console.log('props', this.props)
+
     const productsThunk = fetchProducts()
     store.dispatch(productsThunk)
-    const orderThunk = fetchOrder(1) // takes userId
+
+    const orderThunk = fetchOrder(userId) // takes userId
     store.dispatch(orderThunk)
+
+    const detailThunk = fetchDetails(userId) // takes userId
+    store.dispatch(detailThunk)
     this.props.loadInitialData()
   }
 
@@ -70,7 +78,8 @@ const mapState = (state) => {
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
     product: state.product,
-    order: state.order
+    order: state.order,
+    user: state.user
   }
 }
 
