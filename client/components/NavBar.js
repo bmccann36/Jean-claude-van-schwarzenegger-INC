@@ -10,42 +10,37 @@ function NavBar(props) {
 
   const { handleClick, isLoggedIn } = props;
 
-    return (
-      <nav>
-        <div>
-          <NavLink to="/products" >
-            <h1>Jean-Claude-Schwarzenegger Online Store</h1>
-          </NavLink>
-        </div>
-        {
-            isLoggedIn ?
-
-              <div className="nab-bar">
-                {/* The navbar will show these links before you log in */}
-                <NavLink to="/products"><span>Products</span></NavLink>
-                <NavLink to="/checkout"><span>Checkout</span></NavLink>
-
-                {/* The navbar will show these links after you log in */}
-                {/*<div className="product"><NavLink to="/products">PRODUCTS</NavLink></div>*/}
-                {/*<NavLink to="/home">Home</NavLink>*/}
-                <a href="#" onClick={handleClick}><span>Logout</span></a>
-                <NavLink to="/cart"><img className="cart" src={`http://www.clker.com/cliparts/X/U/F/3/N/2/shopping-cart-logo.svg.hi.png`}/></NavLink>
-
-              </div>
-                      :
-              <div className="nab-bar">
-                {/* The navbar will show these links before you log in */}
-                <NavLink to="/products"><span>Products</span></NavLink>
-                <NavLink to="/login"><span>Login</span></NavLink>
-                <NavLink to="/signup"><span>Signup</span></NavLink>
-                {/*<NavLink to="/cart">*/}
-                  {/*<span>Cart</span>*/}
-                {/*</NavLink>*/}
-              </div>
-            }
-        <hr />
-      </nav>
-    )
+  return (
+    <nav>
+      <div>
+        <img id="vhs" src="https://i.pinimg.com/736x/c6/d6/b5/c6d6b55a95d6e2c2fb01b77ba247b365--s-aesthetic-s-theme.jpg" />
+        <NavLink to="/products" >
+          <h1>Jean-Claude-Schwarzenegger Online Store</h1>
+        </NavLink>
+        <img id="rad" src="https://i.pinimg.com/736x/c0/e3/20/c0e3205ed6ce85ad1f92f22e5ea41623--s-design-graphic-s-logo-design.jpg" />
+      </div>
+      {
+        isLoggedIn
+          ?
+          <div className="nav-bar">
+            {/* The navbar will show these links after you log in */}
+            <NavLink to="/products"><span>Products</span></NavLink>
+            <NavLink to="/home"><span>Home</span></NavLink>
+            <a href="#" onClick={handleClick}><span>Logout</span></a>
+            <NavLink to="/cart"><span>Cart</span></NavLink>
+          </div>
+          :
+          <div className="nav-bar">
+            {/* The navbar will show these links before you log in */}
+            <NavLink to="/products"><span>Products</span></NavLink>
+            <NavLink to="/login"><span>Login</span></NavLink>
+            <NavLink to="/signup"><span>Sign Up</span></NavLink>
+            <NavLink to="/cart"><span>Cart</span></NavLink>
+          </div>
+      }
+      <hr/>
+    </nav>
+  )
 }
 
 

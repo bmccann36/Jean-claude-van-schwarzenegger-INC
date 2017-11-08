@@ -10,47 +10,25 @@ class SingleProduct extends Component {
 
    constructor(props){
      super(props);
-
      this.handleNewItem = this.handleNewItem.bind(this);
    }
 
-  handleNewItem(ev, productId) {
-    const id = Number(this.props.match.params.productId);
+  handleNewItem(ev) {
     ev.preventDefault()
-    //const userId = ev.target.userId.value
-    //const productId = ev.target.productId.value
-    const newItemThunk = addProductToDb(1, id)
+    // console.log('WHEN IS THIS LOGGING???')
+    const userId = store.getState().user.id
+    const id = Number(this.props.match.params.productId)
+    const newItemThunk = addProductToDb(userId, id)
     store.dispatch(newItemThunk)
   }
-  //
-  // handleIncrement(ev) {
-  //   ev.preventDefault()// for now getting the orderId off of the state at 'order' in the future probably better to get it from the userId which we will be storing in state -brian
-  //   // console.log(this.props.order[0].id)
-  //   const orderId = ev.target.orderId.value
-  //   const productId = ev.target.productId.value
-  //   const incrementThunk = incrementInDb(orderId, productId)
-  //   store.dispatch(incrementThunk)
-  //
-  // }
-  //
-  // handleSubmit(ev) {
-  //   ev.preventDefault()
-  //   console.log('you submitted')
-  //   const statusThunk = changeStatusDb(1, { status: 'ordered' })
-  //   store.dispatch(statusThunk)
-  // }
-
-
 
     render(){
 
       const { products } = this.props;
       const productId = Number(this.props.match.params.productId);
-
       const singleProduct = products.filter(product => product.id === productId);
-
-            //console.log('productId ', productId)
-
+      console.log('RETURNED ORDER ********', store.getState())
+      
           return (
             <div>
               {
