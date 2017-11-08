@@ -6,18 +6,23 @@ import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome, Review, SingleProduct, AllProduct, Checkout} from './components'
 import Cart from './components/Cart'
-
+import  axios  from 'axios'
 
 import store from './store'
 import { fetchOrder } from './store/order'
 import { me, fetchProducts, fetchDetails } from './store'
 
 
+
 /**
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount (props) {
+
+  constructor(props){
+    super(props)
+  }
+    componentDidMount (props) {
 
     let userId = this.props.user.id
       console.log('props', this.props)
@@ -25,13 +30,13 @@ class Routes extends Component {
     const productsThunk = fetchProducts()
     store.dispatch(productsThunk)
 
-    const orderThunk = fetchOrder(userId) // takes userId
+    const orderThunk = fetchOrder(1) // takes userId
     store.dispatch(orderThunk)
 
-    const detailThunk = fetchDetails(userId) // takes userId
+    const detailThunk = fetchDetails(1) // takes userId
     store.dispatch(detailThunk)
     this.props.loadInitialData()
-  }
+}
 
 
 
@@ -52,6 +57,7 @@ class Routes extends Component {
             <Route path="/cart" component={Cart} />
             <Route path="/checkout" component={Checkout} />
             <Route path="/reviews" component={Review} />
+            <Route path="/home" component={UserHome} />
 
             {
               isLoggedIn &&
