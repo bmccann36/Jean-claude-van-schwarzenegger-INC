@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import  axios  from 'axios'
+import axios from 'axios'
 
 import store from '../store'
-import { changeQuantInDb, addProductToDb, changeStatusDb, destroyOrderInDb } from '../store/order'
+import { changeQuantInDb, addProductToDb, changeStatusDb, destroyOrderInDb, destroyOrderItemInDb, fetchOrder } from '../store/order'
 
 
 class TestCart extends Component {
@@ -25,7 +25,7 @@ class TestCart extends Component {
     ev.preventDefault()
     const orderId = ev.target.orderId.value
     const productId = ev.target.productId.value
-    const quant = {quantity: ev.target.quant.value}
+    const quant = { quantity: ev.target.quant.value }
     // console.log(orderId, productId, quant)
     const quantThunk = changeQuantInDb(orderId, productId, quant)
     store.dispatch(quantThunk)
@@ -45,14 +45,23 @@ class TestCart extends Component {
     store.dispatch(clearThunk)
   }
 
+  handleRemoveProd(ev) {
+    ev.preventDefault()
+    const orderId = ev.target.orderId.value
+    const productId = ev.target.productId.value
+    console.log('handling remove prod')
+    const removeItemThunk = destroyOrderItemInDb(orderId, productId)
+    store.dispatch(removeItemThunk)
+  }
+
   componentDidMount() {
-    axios.get('/api/orders/detail/1')
-    .then(res=> res.data)
-    .then(details => console.log(details))
+
   }
 
 
   render() {
+
+    console.log(this.props)
     let products
     if (this.props.order.length) products = this.props.order[0].products // this is how you see products
 
@@ -63,6 +72,14 @@ class TestCart extends Component {
           <button type="submit" onClick={this.handleSubmit}> submit </button>
         </div>
 
+        <h3>delete order item</h3>
+        <form onSubmit={this.handleRemoveProd}>
+          <input placeholder="orderId" type="number" name="orderId" />
+          <input placeholder="productId" type="number" name="productId" />
+          <button type="submit"> remove item </button>
+        </form>
+
+
         <div>
           <h3>clear cart</h3>
           <form onSubmit={this.handleClear}>
@@ -71,14 +88,14 @@ class TestCart extends Component {
           </form>
 
           <h3> changeQuantity </h3>
-        <form onSubmit={this.handleQuant}>
-          <p> order id </p>
-          <input placeholder="orderId" type="number" defaultValue="6" name="orderId" />
-          <p> product id </p>
-          <input placeholder="productId" type="number" defaultValue="2" name="productId" />
-          <input  type="number" placeholder= "quantity" name="quant" />
-          <button type="submit"> change </button>
-        </form>
+          <form onSubmit={this.handleQuant}>
+            <p> order id </p>
+            <input placeholder="orderId" type="number" defaultValue="6" name="orderId" />
+            <p> product id </p>
+            <input placeholder="productId" type="number" defaultValue="2" name="productId" />
+            <input type="number" placeholder="quantity" name="quant" />
+            <button type="submit"> change </button>
+          </form>
 
         </div>
 

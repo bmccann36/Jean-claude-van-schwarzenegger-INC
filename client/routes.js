@@ -18,8 +18,11 @@ import { me, fetchProducts } from './store'
  */
 class Routes extends Component {
   componentDidMount () {
-    const productsThunk = fetchProducts()
-    store.dispatch(productsThunk)
+    // const productsThunk = fetchProducts()
+    // store.dispatch(productsThunk)
+    // console.log(this.props, 'in routes')
+    // const fetchThunk = fetchOrder(2)
+    // store.dispatch(fetchThunk)
     this.props.loadInitialData()
   }
 

@@ -6,17 +6,15 @@ const GET_ORDER = 'GET_ORDER'
 const MOD_STATUS = 'MOD_STATUS'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const CHANGE_QUANT = 'CHANGE_QUANT'
-const CLEAR = 'CLEAR'
-const DECREMENT = 'DECREMENT' // possibly same as CHANGE_QUANT
-// const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
+
+const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 
 //ACTION CREATORS
 const getOrder = (orderItems) => ({ type: GET_ORDER, orderItems: orderItems })
 const modStatus = (updatedOrder) => ({ type: MOD_STATUS, order: updatedOrder }) // use this for clear as well
 const addProduct = (order) => ({ type: ADD_PRODUCT, order: order })
 const changeQuant = (orderItem) => ({ type: CHANGE_QUANT, orderItem: orderItem })
-// const decrement = (orderItem) => ({ type: DECREMENT, order: orderItem })
-// const removeProduct = (order) => ({ type: REMOVE_PRODUCT, order: order })
+const removeProduct = (order) => ({ type: REMOVE_PRODUCT, orderItem: order })
 
 //THUNK CREATORS
 
@@ -61,7 +59,7 @@ export function fetchOrder(userId) {
     return axios.get(`/api/orders/user/${userId}`)
       .then(res => res.data)
       .then(orderItems => {
-        console.log("ORDERITEMS LENGTH", orderItems.length)
+        // console.log("ORDERITEMS LENGTH", orderItems.length)
         if (orderItems.length) dispatch(getOrder(orderItems))
         else console.log('no dispatch')
       })
@@ -89,6 +87,20 @@ export function destroyOrderInDb(orderId) {
   }
 }
 
+export function destroyOrderItemInDb(orderId, productId) {
+
+  console.log(`api/orders/item/${orderId}/${productId}`)
+  return function thunk(dispatch) {
+    return axios.delete(`api/orders/item/${orderId}/${productId}`)
+      // console.log('getting to delete order item')
+      .then(res => res.data)
+      .then(() => {
+        dispatch(removeProduct())
+      })
+  }
+}
+
+
 
 // REDUCER
 
@@ -106,6 +118,11 @@ export default function (order = [], action) {
       return order.map(cartItem => {
         if (cartItem.productId === action.orderItem.productId) return action.orderItem
         else return cartItem
+      })
+
+    case REMOVE_PRODUCT:
+      return order.filter(cartItem => {
+        return cartItem.productId !== action.orderItem.productId
       })
 
     case MOD_STATUS: // empties cart (sets back to empty array)

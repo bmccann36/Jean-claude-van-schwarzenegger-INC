@@ -14,12 +14,13 @@ class SingleProduct extends Component {
      this.handleNewItem = this.handleNewItem.bind(this);
    }
 
-  handleNewItem(ev, productId) {
-    const id = Number(this.props.match.params.productId);
+  handleNewItem(ev) {
     ev.preventDefault()
+    const userId = this.props.user.id
+    const productId = Number(this.props.match.params.productId);
     //const userId = ev.target.userId.value
     //const productId = ev.target.productId.value
-    const newItemThunk = addProductToDb(1, id)
+    const newItemThunk = addProductToDb(userId, productId)
     store.dispatch(newItemThunk)
   }
   //
@@ -45,6 +46,7 @@ class SingleProduct extends Component {
     render(){
 
       const { products } = this.props;
+
       const productId = Number(this.props.match.params.productId);
 
       const singleProduct = products.filter(product => product.id === productId);
@@ -78,6 +80,7 @@ const mapStateToProps = function (state) {
   return {
     products: state.products,  //product Or products  ????
     order: state.order,
+    user: state.user
   }
 }
 

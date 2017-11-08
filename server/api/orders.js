@@ -39,7 +39,7 @@ router.get('/detail/:userId', (req, res, next) => {
 // INCREMENT -- thunk = incrementInDb
 router.put('/:orderId/update/:productId', (req, res, next) => {
 	magenta('req here')
-		console.log(req.body)
+	console.log(req.body)
 	OrderProduct.findOne({
 		where: {
 			productId: req.params.productId,
@@ -146,7 +146,23 @@ router.put('/:userId/add/:productId', (req, res, next) => {
 		.catch(next)
 })
 
+router.delete('/item/:orderId/:productId', (req, res, next) => {
+	magenta('hitting route')
+		OrderProduct.findAll({
+		where: {
+			orderId: req.params.orderId,
+			productId: req.params.productId,
+		}
+	})
+	// .then(res.send.bind(res))
+	.then(orderItem => orderItem[0].destroy())
+	.then(() => res.send(`Product # ${req.params.productId} Destroyed!`))
+	.catch(next)
+})
 
+
+
+//deltes a whole order
 router.delete('/:orderId', (req, res, next) => {
 	Order.findById(req.params.orderId)
 		.then(order => {
@@ -156,6 +172,10 @@ router.delete('/:orderId', (req, res, next) => {
 		.catch(next)
 
 })
+
+// REMOVE ORDER ITEM
+
+
 
 
 // router.delete('/:orderListId', (req, res, next) => {
@@ -180,5 +200,5 @@ router.delete('/:orderId', (req, res, next) => {
 module.exports = router;
 
 function magenta(str) {
-  console.log(chalk.magenta(str))
+	console.log(chalk.magenta(str))
 }

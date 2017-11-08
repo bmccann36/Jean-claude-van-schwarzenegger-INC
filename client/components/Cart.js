@@ -3,6 +3,8 @@ import { NavLink, withRouter } from 'react-router-dom'
 import store from '../store'
 import { connect } from 'react-redux'
 
+import  axios  from 'axios'
+
 import { incrementInDb, addProductToDb } from '../store/order'
 
 
@@ -11,21 +13,43 @@ class Cart extends Component {
   constructor(props) {
     super(props)
 
+
   }
 
+  componentWillReceiveProps() {
+    console.log(this.props, 'in testCart')
+    axios.get('/api/orders/detail/1')
+    .then(res=> res.data)
+    .then(details => console.log(details[0].products[0], 'details'))
+  }
 
   render() {
-    let products
-    let orderItems
-    if (this.props) {
-      products = this.props.product
-      orderItems = this.props.order
-    }
-  orderItems.forEach( orderItem => {
-    const getDetail = findProduct(products, orderItem.productId)
-    orderItem.details = getDetail[0]
-  })
-  console.log(orderItems, 'orderItems')
+    const dummy = this.state
+    // console.log(this.props.order)
+    // let products
+    // let orderItems
+    // let newArr = []
+    // if (this.props) {
+    //   products = this.props.product
+    //   orderItems = this.props.order
+    // }
+    // orderItems.forEach((item, i) => {
+    //   newArr[i] = item
+    // })
+    // orderItems.forEach(orderItem => {
+    //   const getDetail = findProduct(products, orderItem.productId)
+    //   newObj['details'] = getDetail
+    // })
+
+
+    // orderItems.forEach( orderItem => {
+    //   // console.log(orderItem)
+    //   const getDetail = findProduct(products, orderItem.productId)
+    //   orderItem.details = 'random'
+    // })
+    // console.log(orderItems[0].details, 'newObj')
+    // console.log(newArr, 'newObj')
+
 
     return (
 

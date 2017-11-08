@@ -34,7 +34,8 @@ function AllProduct(props) {
 
 const mapStateToProps = function (state) {
   return {
-    products: state.products  //product Or products  ???
+    products: state.products,  //product Or products  ???
+    order: state.order
   }
 }
 
