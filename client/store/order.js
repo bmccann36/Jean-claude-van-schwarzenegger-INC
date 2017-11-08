@@ -61,7 +61,7 @@ export function fetchOrder(userId) {
     return axios.get(`/api/orders/user/${userId}`)
       .then(res => res.data)
       .then(orderItems => {
-        console.log(orderItems.length)
+        console.log("ORDERITEMS LENGTH", orderItems.length)
         if (orderItems.length) dispatch(getOrder(orderItems))
         else console.log('no dispatch')
       })
