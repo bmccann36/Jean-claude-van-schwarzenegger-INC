@@ -24,8 +24,8 @@ class Routes extends Component {
   }
     componentDidMount (props) {
 
-    let userId = this.props.user.id
-      console.log('props', this.props)
+    // let userId = this.props.user.id
+    //   console.log('props', this.props)
 
     const productsThunk = fetchProducts()
     store.dispatch(productsThunk)
@@ -35,6 +35,7 @@ class Routes extends Component {
 
     const detailThunk = fetchDetails(1) // takes userId
     store.dispatch(detailThunk)
+
     this.props.loadInitialData()
 }
 
