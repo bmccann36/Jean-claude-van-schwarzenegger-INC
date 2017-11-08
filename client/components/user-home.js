@@ -29,7 +29,6 @@ export class UserHome extends Component {
   }
 
   componentDidMount () {
-    console.log("PROPS ID", this.props.id)
     const orderThunk = fetchOrder(this.props.id) // takes userId
     store.dispatch(orderThunk)
   }
