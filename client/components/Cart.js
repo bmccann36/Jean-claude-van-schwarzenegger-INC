@@ -1,72 +1,97 @@
 import React, { Component } from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
-import store from '../store'
 import { connect } from 'react-redux'
+import axios from 'axios'
+import store from '../store'
 
-import { incrementInDb, addProductToDb } from '../store/order'
 
+import { changeStatusDb  } from '../store/order'
 
 
 class Cart extends Component {
-  constructor(props) {
-    super(props)
-
+  constructor() {
+    super()
+    this.state = {details:[]}
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  componentDidMount() {
+    console.log(this.props.user, 'in cart')
+    const userId = this.props.user.id
+    axios.get(`/api/orders/detail/${userId}`)
+      .then(res => res.data)
+      .then(details => {
+        console.log(details, 'details')
+        this.setState({details: details})
+      })
+      // console.log(this.state, 'state')
+  }
+
+  handleSubmit(ev){
+    ev.preventDefault()
+    const userId = this.props.user.id
+    const statusThunk = changeStatusDb(userId, { status: 'ordered' })
+    store.dispatch(statusThunk)
+    alert("you're order has been placed, get to da choppa!!")
+    this.setState({details:[]})
+  }
 
   render() {
-    let products
-    let orderItems
-    if (this.props) {
-      products = this.props.product
-      orderItems = this.props.order
-    }
-  orderItems.forEach( orderItem => {
-    const getDetail = findProduct(products, orderItem.productId)
-    orderItem.details = getDetail[0]
-  })
-  console.log(orderItems, 'orderItems')
-
+    const detail = this.state.details
+    let price = 0
     return (
-
       <div>
-        {/* <ul> */}
-        {/*{*/}
-        {/*orders.length && orders.map(order=> {*/}
-        {/*return (*/}
-        {/*<h1 key={order.productId}>{order.quantity}</h1>*/}
-        {/*)*/}
-        {/*})*/}
-        {/*}*/}
-        {/*</ul>*/}
+        <table>
+          <tr>
+            <th>ITEM</th>
+            <th>QTY</th>
+            <th>UNIT PRICE</th>
+          </tr>
 
-        {/* <NavLink to="/checkout">
-        <button className="sub-btn"><small>Checkout</small></button>
-      </NavLink> */}
-        <h1> HELLO </h1>
+
+        {
+          detail.length && detail.map(d => (
+               //console.log('details', d)
+                d.products.map(product =>{
+                price += (product.price * product.orderProduct.quantity)
+
+                return (
+
+                  <tr>
+                    <td>{product.name}</td>
+                    <td>{product.orderProduct.quantity}</td>
+                    <td>{product.price}</td>
+                  </tr>
+          )})
+
+          ))
+        }
+
+      </table>
+
+        <p id="sub-total">
+          <strong>Sub Total</strong>: ${price} <span id="stotal"></span>
+        </p>
+
+
+    <button className="sub-btn" onClick={this.handleSubmit}>
+    <small>Checkout</small></button>
 
       </div>
     )
   }
-
-
 }
 
 const mapStateToProps = (state) => {
   return {
-    product: state.products,
+
     order: state.order,
     user: state.user
   }
 }
 
-const mapDispatchToProps = { incrementInDb, addProductToDb }
+const mapDispatchToProps = { changeStatusDb }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart))
 
 
-
-
-function findProduct(products, productId) {
-  return products.filter(product => productId === product.id)
-}

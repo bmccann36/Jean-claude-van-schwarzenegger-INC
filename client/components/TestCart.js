@@ -46,9 +46,7 @@ class TestCart extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/orders/detail/1')
-    .then(res=> res.data)
-    .then(details => console.log(details))
+    console.log(this.props, 'in test Cart')
   }
 
 

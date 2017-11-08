@@ -19,7 +19,7 @@ const AuthForm = (props) => {
         </div>
         <div>
           <label htmlFor="password"><small>Password</small></label>
-          <input name="password" type="password" />
+          <input name="password"  type="password" />
         </div>
         <div>
           <button type="submit" className="sub-btn"><small>{displayName}</small></button>
@@ -60,6 +60,7 @@ const mapDispatch = (dispatch) => {
       evt.preventDefault()
       const formName = evt.target.name
       const email = evt.target.email.value
+
       const password = evt.target.password.value
       dispatch(auth(email, password, formName))
         //alert(`You\'re Signed in as a Member. Have Fun Shopping, Don\'t Forget Tip!!!!!` )

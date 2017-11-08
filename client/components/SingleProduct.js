@@ -15,11 +15,12 @@ class SingleProduct extends Component {
 
   handleNewItem(ev) {
     ev.preventDefault()
-    // console.log('WHEN IS THIS LOGGING???')
-    const userId = store.getState().user.id
-    const id = Number(this.props.match.params.productId)
-    const newItemThunk = addProductToDb(userId, id)
+    // console.log(this.props.user.id, 'in handle')
+    const productId = Number(this.props.match.params.productId)
+    const userId = this.props.user.id
+    const newItemThunk = addProductToDb(userId, productId)
     store.dispatch(newItemThunk)
+    alert('ITEM ADDED TO CART');
   }
 
     render(){
@@ -27,8 +28,9 @@ class SingleProduct extends Component {
       const { products } = this.props;
       const productId = Number(this.props.match.params.productId);
       const singleProduct = products.filter(product => product.id === productId);
-      console.log('RETURNED ORDER ********', store.getState())
-      
+
+      // console.log('RETURNED ORDER ********', store.getState())
+
           return (
             <div>
               {
@@ -47,6 +49,7 @@ class SingleProduct extends Component {
               <NavLink to="/cart" >
                 <button className="sub-btn" type="submit" onClick={this.handleNewItem}>Add To Cart</button>
               </NavLink>
+
             </div>
           )
      }
@@ -56,6 +59,7 @@ const mapStateToProps = function (state) {
   return {
     products: state.products,  //product Or products  ????
     order: state.order,
+    user: state.user
   }
 }
 

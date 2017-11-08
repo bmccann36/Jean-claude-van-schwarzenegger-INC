@@ -29,16 +29,19 @@ export class UserHome extends Component {
   }
 
   componentDidMount () {
-    const orderThunk = fetchOrder(this.props.id) // takes userId
+    const userId = this.props.user.id
+    // console.log(userId, 'in user home')
+
+    const orderThunk = fetchOrder(userId) // takes userId
     store.dispatch(orderThunk)
   }
 
   render (){
         return (<div>
           <h1>Welcome, {this.props.email}!</h1>
-    
+
           <NavLink to="/products"><span><h2 className="sub-btn">Start Shopping</h2></span></NavLink>
-    
+
         </div>)
   }
 }
@@ -48,8 +51,8 @@ export class UserHome extends Component {
  */
 const mapState = (state) => {
   return {
-    email: state.user.email,
-    id:state.user.id
+    user: state.user,
+    order: state.order
   }
 }
 
